@@ -56,7 +56,7 @@
 			progress: true,
 
 			// Display the page number of the current slide
-			slideNumber: false,
+			slideNumber: true,
 
 			// Determine which displays to show the slide number on
 			showSlideNumber: 'all',
@@ -74,7 +74,7 @@
 			overview: true,
 
 			// Vertical centering of slides
-			center: true,
+			center: false,
 
 			// Enables touch navigation on devices with touch input
 			touch: true,
