@@ -1385,3 +1385,13 @@ body {
 
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
+
+.reveal li {
+  padding-bottom: 20px;
+}
+
+.reveal .credit {
+  font-size: 14px;
+  color: #929497;
+  text-align: right;
+}
