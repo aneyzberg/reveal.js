@@ -219,6 +219,13 @@
                   <li>once found block, it communicates to network. If block is valid other nodes add it, and</li>
                   <li>incentivizes nodes to be good actors</li>
                 <li>incentives people to contribute</li>
+                <li>The mechanism behind proof of work was a breakthrough in the space
+                  because it simultaneously solved two problems.
+                  First, it provided a simple and moderately effective consensus algorithm, allowing nodes in the network to collectively agree
+                  on a set of canonical updates to the state of the Bitcoin ledger. Second, it provided a mechanism for allowing free entry into the consensus process,
+                  solving the political problem of deciding who gets to influence the consensus, while simultaneously preventing sybil attacks.</li>
+                <li> It does this by substituting a formal barrier to participation, such as the requirement to be registered as a unique entity on a particular list,
+                  with an economic barrier - the weight of a single node in the consensus voting process is directly proportional to the computing power that the node brings.</li>
             </ul>
             </aside>
         </aside>
@@ -245,22 +252,630 @@
 
             <aside class="notes">
                 <ul>
-
+                    <li>part of the Bitcoin experiment is the underlying blockchain technology as a tool of distributed consensus</li>
                 </ul>
               </aside>
         </section>
 
         <section>
-            What does any of this have to do with Elixir?
+            So why think about this in the context of Elixir?
+          <aside class="notes">
+            <ul>
+                <li>bitcoin uses blockchain to implement decentralized leger for payemnst</li>
+                <li>nodes send messages to the netwrok using a gossip protocol</li>
+                <li>to crete new blocks you have to do some work </li>
+                <li>so we need a distributed system that is concurrent, that communicates via message passing, sound familiar</li>
+                <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was like, I want to review teh properties of elixir that make it such good fit</li>
+            </ul>
+
+          </aside>
          </section>
 
-        <section>
-          <div>Distributed system</div>
-          <div>gossip protocol</div>
-          <div>we also have to mine proof of work</div>
+         <section>
+           Network of distributed nodes that each have a copy of the block chain and communicate via message passing
+         </section>
+
+         <section>
+           So how do we build that?
+         </section>
+
+         <section>
+           Let's take a quick look at how messge passing works in elixir
+         </section>
+
+
+
+         <section>
+            <h2>Processes</h2>
+            <aside class="notes">
+              <ul>
+                  <li>how does work get down in elixir</li>
+                  <li>all code in elixr runs inside of processes</li>
+                  <li>processes are isolated from each other, run concurrent to one another,
+                     and communicate via message passing. </li>
+                  <li>small programs communciate to each other via message passing, supe rlight weight</li>
+                  <li>they seem like native threads but are simpler, and can have thousands of processes running concurrently</li>
+                  <li>thanks to the erlang VM, our processes are working across all your CPU's so you are maximizng efficiency.</li>
+              </ul>
+
+             </aside>
+          </section>
+
+
+          <section>
+              ```elixir
+                defmodule Example do
+                  def subtract(a, b) do
+
+                  end
+                end
+
+
+                iex> Example.subtract(3, 2)
+                1
+                :ok
+              ```
+          </section>
+
+          <section>
+              ```elixir
+                spawn(Example, :subtract, [3, 2])
+                1
+                #PID<0.80.0>
+              ```
+
+              <aside class="notes">
+                <ul>
+                  <li>easiest way to create a process is to call spawn</li>
+                  <li>spawn takes an anonymous or named function</li>
+                  <li>spawn returns a process Identifier or PID</li>
+                </ul>
+
+              </aside>
+
+            </section>
+
+         <section>
+           <h2>Message passing</h2>
+           <img src="lib/images/process_message_passing.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+            <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://benjamintan.io/blog/2013/06/25/elixir-for-the-lazy-impatient-and-busy-part-2-processes-101/</div>
+
+
+           <aside class="notes">
+             <ul>
+              <li>processes communicate by passing messages</li>
+              <li>here are two main components to this: send/2 and receive</li>
+              <li> send function allows us to send to PIDs and receive function allows us to match messsges</li>
+            </ul>
+            </aside>
+         </section>
+
+         <section>
+           ```elixir
+            defmodule Greet do
+              def by_name do
+                receive do
+                  {:name, name} -> IO.puts("Hello #{name}")
+                end
+
+                by_name
+              end
+            end
+
+            iex> pid = spawn(Greet, :by_name, [])
+            #PID<0.108.0>
+
+            iex> send pid, {:name, "Ben"}
+            "Hello Ben"
+            {:name, "Ben"}
+
+            iex> send pid, :ok
+            :ok
+          ```
+
+          <aside class="notes">
+              <ul>
+               <li>create a process</li>
+               <li>pass in our arguemtne which is a tuple of name and teh string "bem</li>
+               <li>if matches it recieve expected string "hello ben"</li>
+             </ul>
+          </aside>
         </section>
 
-        <section>OTP</section>
+
+        <section>
+          <h1>Process Linking &amp; Process Montioring<h1>
+
+           ```elixir
+              defmodule Connection do
+              def explode, do: exit(:kaboom)
+              end
+
+            iex> spawn(Example, :explode, [])
+            #PID<0.66.0>
+
+            iex> spawn_link(Example, :explode, [])
+            ** (EXIT from #PID<0.57.0>) evaluator process exited with reason: :kaboom
+          ```
+            <aside class="notes">
+                <ul>
+                  <li>other things that we can do with processes</li>
+                  <li>problen with spawn is we don't know if our process crashes</li>
+                  <li>this allows our processes to recieve exit notifications from each other</li>
+                  <li>now we don't want to our current process to die, we can trap the exit messages and handle them so current process does not die </li>
+                </ul>
+            </aside>
+
+          </section>
+
+
+          <section >
+            <h1>Agents</h1>
+            ```elixir
+            `iex> {:ok, agent} = Agent.start_link(fn -> [1, 2, 3] end)
+              {:ok, #PID<0.65.0>}
+
+              iex> Agent.update(agent, fn (state) -> state ++ [4, 5] end)
+              :ok
+
+              iex> Agent.get(agent, &(&1))
+              [1, 2, 3, 4, 5]
+            ```
+
+            <aside class="notes">
+                <ul>
+                  <li>Agents are an abstraction around background processes maintaining state.
+                    We can access them from other processes within our application and node. The state of our Agent is set to our function’s return value:
+                  </li>
+                </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h2>Tasks</h2>
+            ```elixir
+              defmodule Example do
+                def double(x) do
+                  :timer.sleep(2000)
+                  x * 2
+                end
+              end
+
+              iex> task = Task.async(Example, :double, [2000])
+              %Task{pid: #PID<0.111.0>, ref: #Reference<0.0.8.200>}
+
+              #  Do some work
+
+            iex> Task.await(task)
+            4000
+            ```
+
+            <aside class="notes">
+                <ul>
+                  <li>Tasks provide a way to execute a function in the background and retrieve its return value later.
+                    They can be particularly useful when handling expensive operations without blocking the application execution.
+                  </li>
+                </ul>
+            </aside>
+          </section>
+
+          <section>
+            Back to BlockChain
+
+            <aside class="notes">
+                <ul>
+                  <li>so we saw some abstractions for concurrency around message passing and storing state</li>
+                  <li>w can run mutiple processes at teh same time, we can store state in processes and communicate asynchronously via messages</li>
+                  <li>no we'll take a look at how elixir and especially Erlan allows us to create </li>
+                  <li>yet to build a blockshain network, we want greater conrtol of the concurrency and message passing</li>
+                  <li> We want something to manage that more complicated behavrio</li>
+                </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>OTP</h1>
+
+
+            <aside class="notes">
+                <ul>
+                    <li>When we think about how to build concurrent applications, and how to deal with monitorin, and timeouts etc, adn servers, there are things to think about.</li>
+                    <li>OTP framework takes care of this by grouping these essential practices into a set of libraries that have been carefully engineered and battle-hardened over years.</li>
+                    <li>The OTP framework is also a set of modules and standards designed to help you build applications. </li>
+                <ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h1>So Let's start buildig</h1>
+          </section>
+
+          <section>
+            We know we need to somehow build a chain of blocks
+          </section>
+
+          <section>
+            So let's start with a single block
+          </section>
+
+
+          <section>
+
+            ```elixir
+              defmodule Block do
+
+                defstruct nonce: nil, previous_hash: nil, transaction: nil
+
+                def create({:initial, work_factor}, transaction) do
+                  ,,,
+                end
+
+                def create({:previous_hash, previous_hash, work_factor}, transaction) do
+                  hash_info = mint(previous_hash, work_factor)
+                  %Block{nonce: hash_info.nonce, previous_hash: previous_hash, transaction: transaction}
+                end
+
+                def mint(previous_hash, work_factor) do
+                  nonce = 0
+                  .....
+                  create_hash(previous_hash, nonce, matcher)
+                end
+
+                def create_hash(previous_hash, nonce, matcher) do
+                  stringified_nonce = Integer.to_string(nonce)
+                  hash =  :crypto.hash(:sha256, [previous_hash, stringified_nonce])
+                  |> Base.encode16
+                  |> String.downcase
+
+                  match? = matcher
+                  |> matches?(hash)
+
+                  case match? do
+                      false ->
+                        nonce = nonce + 1
+                        create_hash(previous_hash, nonce, matcher)
+                      true ->
+                        %{nonce: nonce, previous_hash: previous_hash, hash: hash}
+                  end
+                end
+                ....
+              end
+
+            ```
+
+
+            <aside class="notes">
+              <ul>
+                <li>essentially we have a module, that creates and manipulate a Struct that has a nonce, the hash generated by the previous block, and a trnsaction</li>
+                <li>we receive a transaction, and create a block based on the workfactor</li>
+                <li>work in progress - given that the determing the work factor takes time, i haven't done it year, but you might think that you could easily leverage -
+                  how easily processes can run concurrently, to have that hashing potentially happen at the same time by multiple processses to make hashing more efficient</li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            Ok, we have a block....How to we create a chain
+          </section>
+
+
+          <section>
+            ```elixir
+              defmodule Gossip.BlockChain do
+
+              @work_factor 1
+              @me __MODULE__
+              @block_reward 100
+
+              defstruct blocks: [], pub_key: nil, priv_key: nil
+
+              def start_link() do
+                {:ok, pid} = Agent.start_link(&amp;initial_state/0, name: @me)
+              end
+
+              def child_spec(_opts) do
+                %{
+                  id: __MODULE__,
+                  start: {__MODULE__, :start_link, []},
+                  type: :worker,
+                  restart: :permanent,
+                  shutdown: 500
+                }
+              end
+
+
+              def initial_state do
+                {priv_key, pub_key} = RSA.generate_rsa
+                %BlockChain{blocks: [], priv_key: priv_key, pub_key: pub_key}
+              end
+            end
+
+          ```
+
+          <aside class="notes">
+            <ul>
+              <li>So we need each node to have a chain of blocks</li>
+              <li>so as you can see we have another struct</li>
+              <li>now remeber that message identification is all done via cryptography, so each node needs a public nad private key</li>
+              <li>it iwll only send its pub key, not a security expert or cryptographer</li>
+              <li>but there are a couple of other intersting things happend in thsi file</li>
+              <li>so where are we storing the state. notice that to start that we have a start link function, that is starting an agen</li>
+              <li>remember agenst can stor state</li>
+              <li>So this module is storing our Block Chain struct as state in our agent process. and we can retreive manipulte and update that state</li>
+            </ul>
+          </aside>
+          </section>
+
+          <section>
+
+              ```elixir
+              defmodule BlockChain do
+                @work_factor 1
+                @me __MODULE__
+                @block_reward 100
+
+                defstruct blocks: [], pub_key: nil, priv_key: nil
+
+                def start_link() do
+                  {:ok, pid} = Agent.start_link(&amp;initial_state/0, name: @me)
+                end
+
+                def child_spec(_opts) do
+                  %{
+                    id: __MODULE__,
+                    start: {__MODULE__, :start_link, []},
+                    type: :worker,
+                    restart: :permanent,
+                    shutdown: 500
+                  }
+                end
+              end
+            ```
+            <aside class="notes">
+                <ul>
+                  <li>So we have this background process maintaing our blockchain</li>
+                  <li>yet how do we know if its up, and what happends if it goes down</li>
+                  <li>So this is where we go back to some of the Powerful features of OTP</li>
+                </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h1>Supervisors</h1>
+
+
+            <aside class="notes">
+                <ul>
+                  <li>Supervisors are specialized processes with one purpose: monitoring other processes. </li>
+                  <li>These supervisors enable us to create fault-tolerant applications by automatically restarting child processes when they fail.</li>
+                </ul>
+            </aside>
+          </section>
+
+          <section>
+            How do we set this up?
+          </section>
+
+          <section>
+            ```elixir
+              defmodule Application do
+                use Application
+                use Supervisor
+
+                def start(_type, _args) do
+                  Supervisor.start_link([{Gossip.BlockChain, []}], strategy: :one_for_one, name: BlockChain.Supervisor)
+                end
+              end
+            ```
+
+
+            <aside class="notes">
+                <ul>
+                  <li>so in our main application module, we using the supervisor behavior </li>
+                  <li>the magic happens in our start link function.</li>
+                  <li>here the supervisor takes a lit of child processes it is supervising, each argument to the list is a tuple with name of child process, adn initial arguments
+                    to be passed to that process, and a strategy for restarting.
+                  </li>
+                  <li>there are many strategies for restarting. in this case, we are saying only restart the failed process.</li>
+                  <li>So superviosr will call start_link to start its respective child processes</li>
+                </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h2>child spec</h2>
+            ```elixir
+              defmodule BlockChain do
+                @work_factor 1
+                @me __MODULE__
+                @block_reward 100
+
+                defstruct blocks: [], pub_key: nil, priv_key: nil
+
+                def start_link() do
+                  {:ok, pid} = Agent.start_link(&amp;initial_state/0, name: @me)
+                end
+
+                def child_spec(_opts) do
+                  %{
+                    id: __MODULE__,
+                    start: {__MODULE__, :start_link, []},
+                    type: :worker,
+                    restart: :permanent,
+                    shutdown: 500
+                  }
+                end
+              end
+            ```
+            <aside class="notes">
+                <ul>
+                  <li>Now back in our  BlockChain module notice two things</li>
+                  <li>we also have a function called child_spec. This tells the supervisor how to start the blockchain module </li>
+                  <li>so when it called start link, it will call start which defaults to start_link</li>
+                  <li>we also tell it how to restart the process - in this case permenent - always restart</li>
+                </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            Supervisors makes fault tolerance easy
+          </section>
+
+          <section>
+            And fault tolerance is what we want in a distributed blockchain system
+          </section>
+
+
+          <section>Let's look at our blockchain module again</seection>
+
+          <section>
+            ```elixir
+              defmodule Gossip.BlockChain do
+
+                @work_factor 1
+                @me __MODULE__
+                @block_reward 100
+
+                ....
+                def add_block(transaction) do
+                  add_new_block(transaction)
+                end
+
+                ...
+
+                def update_and_retrieve_chain(block) do
+                  case Agent.update(@me, fn(block_chain) -> %{block_chain | blocks: [block | block_chain.blocks] } end ) do
+                    :ok ->
+                        get_state
+                    _ -> IO.puts "did not update"
+                  end
+                end
+
+                def add_new_block(transaction) do
+                ..
+                  case Transaction.valid?(pub_key, transaction) do
+                      {:ok, true} ->
+                        # create new block
+                        update_and_retrieve_chain(block)
+                      _ ->
+                        IO.puts "Invalid Transaction #{ transaction}"
+                  end
+                end
+             end
+            ```
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Agent makes it really easy to maintain and update state of blockchian
+                </li>
+                <li>given the blockchain is an irreversible leger, we will only want to add blocks to the chain</li>
+                <li>Having an agent store the state makes this really easy</li>
+              </ul>
+            </aside>
+
+          </section>
+
+
+          <section>
+            <h1>Transactions</h1>
+          </section>
+
+          <section>
+            A quick note about transactions
+          </section>
+
+          <section>
+            ```elixir
+              defmodule Gossip.Transaction do
+                alias Gossip.Transaction
+                alias Gossip.RSA
+
+
+                defstruct to: '', from: '', amount: 0, signature: ''
+
+                def new_transaction(to, from, amount, private_key) do
+                  %Transaction{
+                    to: to,
+                    from: from,
+                    amount: amount,
+                    signature: sign(private_key, {to, from, amount})
+                    }
+                end
+
+                def sign(priv_key, {to, from, amount}) do
+                  hash = :crypto.hash(:sha256, [to,  amount])
+                  {:ok, signature} = ExPublicKey.sign(hash, priv_key)
+                  signature
+                end
+
+                def valid?(pub_key, %Transaction{to: to, from: from, amount: amount, signature: signature}) do
+                  message = :crypto.hash(:sha256, [to, amount])
+                  {:ok, valid}  = ExPublicKey.verify(message, signature, from)
+                end
+              end
+            ```
+
+            <aside class="notes">
+              <ul>
+                <li>explain transactions in blockchian</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            So how do we actually communicate between other nodes?
+            <aside class="notes">
+              we need some client-server behavior to all
+            </aside>
+          </section>
+
+          <section>
+            Introducing GenServer
+            <aside class="notes">
+              <ul>
+                <li>
+                  Elixir thanks to OTP provides a module for implmentin
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+
+
+
+
+          <section>
+
+
+
+              <aside class="notes">
+                  <ul>
+                      <li>When we think about how to build concurrent applications, and how to deal with monitorin, and timeouts etc, adn servers, there are things to think about.</li>
+                      <li>OTP framework takes care of this by grouping these essential practices into a set of libraries that have been carefully engineered and battle-hardened over years.</li>
+                      <li>The OTP framework is also a set of modules and standards designed to help you build applications. </li>
+                  <ul>
+              </aside>
+          </section>
+        <section>
+          <h3>Distributed Networks</h3>h3>
+
+          <aside class="notes">
+              <div>Open Telecom Platform</div>
+
+            </aside>
+        </section>
+
+
+
+
 
 
       <section class="center">
