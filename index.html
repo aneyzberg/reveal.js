@@ -27,7 +27,7 @@
   <div class="reveal">
     <div class="slides">
       <section class="center" data-background-color="#025A6E">
-        <h2>Crypto + Concurrenct</h2>
+        <h2>Crypto + Concurrency</h2>
         <p style="font-size: 30px">Anna Neyzberg • @ANeyzb • anna@carbonfive.com</p>
       </section>
 
@@ -43,73 +43,137 @@
       <section class="center">
         <h3>What I want to talk about today?</h3>
 
-        <ul>What is the Blockchain</ul>
-        <ul>What is OTP</ul>
-        <ul>OTP + Blockchain</ul>
+        <ul>What is Bitcoin/Blockcahin</ul>
+        <ul>How does it work?</ul>
+        <ul>Why try and build it in elixir</ul>
+      </section>
+
+
+    <section>
+        What is Bitcoin?
       </section>
 
       <section>
-        <h3>What is money?</h3>
+          <h1>Bitcoin uses blockchain to implement decentralized leger for payemnts</h1>
+      </section>
 
+      <section>
+        <h1>It is a secure semi-annonymous store of value</h1>
+      </section>
+
+      <section>
+        <h1>what is value</h1>
+      </section>
+
+      <section>
+        Take a step back and look ook at value in the context of money
+      </section>
+
+
+      <!-- <section>
+          <h3>What is money?</h3>
+
+            <aside class="notes">
+                <ul>
+                  <li>unit of account (we can denominate value)</li>
+                  <li>medium of exchange</li>
+                  <li>store of value</li>
+                  <li>cash - intrinsically valuable good that allows you to pay for material goods</li>
+                  <li>credit - allows you to determine debt</li>
+                </ul>
+            </aside>
+        </section> -->
+
+        <section>
+            "Money is any clearly identifiable object of value that is generally accepted as payment for goods and services and repayment of debts within a market,
+             or which is legal tender within a country. "
+           <div class="credit" style="padding-right: 22px">credit: https://en.wikipedia.org/wiki/History_of_money</div>
+           <aside class="notes">
+             <ul>
+               <li>source of value you can use to get other things of value</li>
+             </ul>
+           </aside>
+        </section>
+
+      <section>
+          <h3>History of money</h3>
+          <img src="lib/images/history_of_money.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://steemit.com/steemit/@cryptomoni/6-stages-of-history-and-evolution-of-money</div>
           <aside class="notes">
               <ul>
-                <li>unit of account (we can denominate value)</li>
-                <li>medium of exchange</li>
-                <li>store of value</li>
-                <li>cash - intrinsically valuable good that allows you to pay for material goods</li>
-                <li>credit - allows you to determine debt</li>
-                <li> Did cash or credit come first?</li>
+                <li>1000 a.d. Song Dynasty - first bank note</li>
+                <li>1944 Bretton woods agreement  -  international monetary and financial order - every currency required to fix to gold</li>
+                <li> 1958 visa</li>
+                <li></li>
+                <li>scarce(mined infrequently)</li>
+                <li>durable(hard to break)</li>
+                <li>hard to fake</li>
+                <li>arbitrarily divisible</li>
               </ul>
           </aside>
       </section>
 
-      <section>
-          "Money is any clearly identifiable object of value that is generally accepted as payment for goods and services and repayment of debts within a market, or which is legal tender within a country. "
-         <div class="credit" style="padding-right: 22px">credit: https://en.wikipedia.org/wiki/History_of_money</div>
-      </section>
 
       <section>
-        <h3>History of money</h3>
-        <img src="lib/images/history_of_money.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://steemit.com/steemit/@cryptomoni/6-stages-of-history-and-evolution-of-money</div>
+          <h1> 1971 - Nixon breaks from bretton woods and cancels convertiblilyt of us dollars to gold./h1>
         <aside class="notes">
-            <ul>
-              <li>1000 a.d. Song Dynasty - first bank note</li>
-              <li>marco polo money goes to Europ in 1300</li>
-              <li>1400 first modern bank in renaissance italy</li>
-              <li> 1661 European bank notes issues in sweden - bank instead government issued paper money
-              </li>
-               <li>nations had issued notes mapped to reserves in treasury - eventually banks did this with teir own collaral</li>
-              <li>19th Century U.S Central bank - really weak - 500 different kinds if bank notes issued by banks</li>
-              <li>1900 U.S. pegs dollar to gold</li>
-              <li> 1958 visa</li>
-              <li>1978 mastercard</li>
-              <li>2002 paypal goes public</li>
-              <li>2009 bitcoin live</li>
-              <li> 2010 first purchase with bitcoin - 2 pizzas 10,000 bitcoin</li>
-              <li>2015 - Ethereum</li>
-              <li>2017 hundreds of billions for bitcoin market cap</li>
-            </ul>
+          <ul>
+            <li>metals valuable, scarce, durable, hard to fake, and arbitraily divisible</li>
+            <li>gollar has value because you can pay taxes</li>
+            <li>people are willing to use it, believe u.s economy is going to keep working</li>
+            <li>fiat's value is not about instrinsic value, but about making a guess about the future</li>
+          </ul>
         </aside>
       </section>
 
-      <section>
-        <h1>Cypherpunks</h1>
-
-        <h3>"Privacy is necessary for an open society in the electronic age. ...
-          We cannot expect governments, corporations, or other large, faceless organizations to grant us privacy ...
-           We must defend our own privacy if we expect to have any. ... Cypherpunks write code. We know that someone has to write software to defend privacy, and ...
-           we're going to write it.""</h3>
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: Eric Hughes "A Cypherpunk's Manifesto"</div>
-
+      <section>how can you create non-collateralized cash that is still valuable
         <aside class="notes">
+          <ul>
+              "create something scarce"
+              "disincentive to buy into a system that grows in supply"
+              "also people need to be using it"
+              "paying taxes"
+          </ul>
+        </aside>
+      </section>
+
+
+
+      <section>Big idea behind cryptocurrencies...</section>
+
+      <section>Do value transfer over the internet</section>
+
+
+      <section>
+          <ul>
+              first time we have a stoer of value that is comletely digital
+            </ul>
             <ul>
-              <li>cypherpunks</li>
+              people are willing to use and can excahnge for goods and servces
+            </ul>
+            <ul>it is scarce</ul>
+
+
+      <section>
+          <h1>Cryptography</h1>
+          <aside class="notes">
+            <ul>
+              <li>mostly government or military</li>
               <li>before 1970 cryptography mostly govt or military</li>
+              <li>military emission till 199</li>
+              <li>foretathers of cryptography belived in using cryptography use cryptography to break monopoly of the state</li>
               <li>advent of computers changed things</li>
-              <li> encryption was considered a military emission - reversed in till 1999
-              </li>
-               <li>1992 mailing list started </li>
+          </aside>
+      </section>
+
+
+      <section>
+          <img src="lib/images/cypher_punks.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://medium.com/swlh/cypherpunks-and-the-rise-of-cryptocurrencies-899011538907</div>
+          <aside class="notes">
+            <ul>
+               <li>1992 Cyper Punks Eric Hughes, Timothy C. May and John Gilmore started an organization humorously called cyperhpunks</li>
+                 mailing list started </li>
               <li>1994 700 subscribers</li>
               <li>1995 Eric Hughes wrote the cypherpunks manifesto
                   online privacy communications
@@ -121,12 +185,24 @@
               </li>
               <li> PGP and Tor cyperpunk projects</li>
               <li> 2008 crisis central govt has too much power - hyperinflation happens becuase govt prints money</li>
+              <li>several early cypherpunk experimented with digital currencies that were not successful, but that Satoshi drew inproation from</li>
             </ul>
         </aside>
       </section>
 
       <section>
-        BlockChain + Bitcoin
+          <h3>"Privacy is necessary for an open society in the electronic age. ...
+              We cannot expect governments, corporations, or other large, faceless organizations to grant us privacy ...
+               We must defend our own privacy if we expect to have any. ... Cypherpunks write code. We know that someone has to write software to defend privacy, and ...
+               we're going to write it.""</h3>
+            <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: Eric Hughes "A Cypherpunk's Manifesto"</div>
+      </section>
+
+
+
+
+      <section>
+         Bitcoin Goes live in 2009
       </section>
 
       <section>
@@ -138,6 +214,7 @@
               <li>decentarlized</li>
               <li>no single point of failure</li>
               <li>anonymity</li>
+              <li>Big idea behind cryptocurrencies, - do value transfesr over teh internet</li>
             </ul>
         </aside>
       </section>
@@ -830,7 +907,7 @@
           </section>
 
           <section>
-            So how do we actually communicate between other nodes?
+              So how do we actually communicate between other nodes?
             <aside class="notes">
               we need some client-server behavior to allowe nodes to make requests and receive messages from each other.
             </aside>
@@ -969,7 +1046,7 @@
                 def handle_cast({:message_from_peer, block_chain_message = %{block_chain: blocks},  id: id, uuid: uuid }}, my_state) do
                 ...
                     if !Enum.member?(my_state.uuids, block_chain_message.uuid) do
-                      case BlockChain.validate_blocks(blocks) do
+                      case BlockChain.validate_blocks(blocks)  &amp;&amp; length(blocks) > length(me.block_chain)do
                         {:ok, true} ->
                           updated_blocks = BlockChain.swap_chain(blocks)
                           me = %{me | block_chain: blocks}
@@ -987,7 +1064,33 @@
                 <ul>
                   so again gen server provides us a really nice interface for sending and receiving messages, that makes this message passing easy
                 </ul>
+                <ul>one important thing to note here </ul>
+                <ul>one of the block chain works by a concencus algorithm</ul>
               </aside>
+            </section>
+
+            <section>
+              Fork Choice rule
+
+              <h2>Message passing</h2>
+              <img src="lib/images/process_message_passing.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+               <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://benjamintan.io/blog/2013/06/25/elixir-for-the-lazy-impatient-and-busy-part-2-processes-101/</div>
+               <aside class="notes">
+                 <ul>
+                   <li>
+                     the consensus algorithm that Satoshi invented was called the fork choice rule
+                   </li>
+                   <li>
+                     you are a node mining a blokc chain, once you hear of a node on height h, you reject all blockcahins less than ehight h, adn start mining on that chain
+                   </li>
+                   <li>I will also respect teh first chain I hear about</li>
+                   <li>
+                     this makes it very hard to douvle spend
+                   </li>
+                   <li>so when our nodes are minnig blocks, if they receive a chian that is longer than their's they will switch to minnig the longer chain</li>
+                 </ul>
+               </aside>
+
             </section>
 
             <section>
@@ -1061,12 +1164,36 @@
               <aside class="notes">
                 <ul>Node.connect allows you to create a connectiosn to a peer node by passing in teh peer address</ul>
                 <ul>if  you connect node 1 to 2, adn 3, 2 nad 3 will know about each other</ul>
-                <ul>just as easy to connect on disributed machines</ul>
+                <ul>there is a way to turn this off if it si not desired</ul>
+                <ul>just as easy to connect on disributed machines. Erlang Uses TCP/IP protocol</ul>
               </aside>
             </section>
 
+            <section>
+              ```bash
+                iex --name anna1@ip --cookie pb -S mix
+              ```
 
+              <aside class="notes">
+                <ul>
+                  <li>
+                    connecting with this name with my ip provides an adress for other nodes not on my machine to connect
+                  </li>
+                  <li>
+                    address in name at host.name - on your machine you can use snmaes which don't require an ip, but acorss machins a
+                    full name is necessary
+                  </li>
+                  <li>
+                    the cookies are authenitcation built in at the lowers levels - when nodes connect they compare the cookie, if they don't match the connection is afalse
+                  </li>
+                </ul>
+              </aside
+              >
+            </section>
 
+            <section>
+              Live Demo Time (that's always a good ide aright?)
+            </section>
 
 
 
@@ -1088,531 +1215,6 @@
         </section>
 
 
-
-
-
-
-      <section class="center">
-        <h3>Why is community important?</h3>
-      </section>
-
-      <section>
-        <img src="lib/images/diverse-teams.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://culclinc8.wordpress.com/2014/06/28/diverse-team-2/</div>
-        <div>We build better products with diverse teams</div>
-      </section>
-
-      <section>
-        <img src="lib/images/facebook-free-basics.png" style="margin-top: 34px; margin-bottom: 0px">
-        <div class="credit" style="padding-right: 22px">credit: http://geeksincambodia.com/free-basics-by-facebook-is-now-available-in-cambodia/</div>
-      </section>
-
-      <section>
-        <img src="lib/images/stats-about-india.jpg" style="margin: 0" />
-        <div class="credit" style="padding-right: 154px;"> credit: http://www.bbc.com/news/world-south-asia-12557384</div>
-      </section>
-
-      <section>
-        <img src="lib/images/graph-internet-india.jpg" style="margin-top: 34px; margin-bottom: 0px">
-        <div class="credit" style="padding-right: 25px;"> credit: https://dazeinfo.com/2016/02/08/mobile-internet-users-in-india-2016-smartphone-adoption-2015/</div>
-        <aside class="notes">
-          <ul>
-            <li>Internet and Mobile Association of India (IAMAI)</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section>
-        <img src="lib/images/free-basics-add.jpg" style="margin-top: 34px; margin-bottom: 0px" />
-        <div class="credit" style="padding-right: 180px">credit: https://jsis.washington.edu/news/spotlight-indias-internet-facebooks-free-basics-basic-failure/</div>
-        <aside class="notes">
-          <ul>
-            <li>Free basics was supposed to give internet access to people who couldn't afford it</li>
-            <li>Facebook got to choose what sites people could go to</li>
-            <li>Choice between no internet and free internet</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section>
-        <img src="lib/images/free-basics-setback.png" style="margin-top: 34px; margin-bottom: 0px" />
-        <div class="credit" style="padding-right: 23px"> credit: https://www.theguardian.com/technology/2016/may/12/facebook-free-basics-india-zuckerberg</div>
-        <aside class="notes">
-          <div> Free Basics was struck down by Indian court</div>
-        </aside>
-      </section>
-
-      <section class="center">
-        <div>"India’s rejection of Free Basics was as economically catastrophic to it as its independence from British colonisation."
-          - Facebook Board Member
-        </div>
-        <aside class="notes">
-          <ul>
-            <li>Free Basics was never a true philanthropic effort</li>
-            <li>Facebook did not understand the true needs of the people it was trying to reach</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section class="center">
-        <ul>
-          <li>India's Railway site books 1.3 billion tickets a day</li>
-          <li>Farmers need weather forecasts</li>
-          <li> Women in remote villages get easy acess to feminie hygiene products</li>
-        </ul>
-      </section>
-
-      <section class="center">
-        <h3> So why am I explaining all this?</h3>
-      </section>
-
-      <section class="center">
-        <div> Promoting diversity means promoting understanding</div>
-      </section>
-
-      <section class="center">
-        <div> This leads to better products that solve problems for those who might’ve otherwise been sidelined.</div>
-        <aside class="notes">
-          <div>What if the team building free basics was more diverse</div>
-          <div>What id they had created a platform that India people could use to innovate and solve their own problems</div>
-        </aside>
-      </section>
-
-      <section>
-        <img src="lib/images/tech-innovation-companies.jpg" style="width: 500px; margin: 0;" />
-        <div class="credit" style="padding-right: 228px;">credit: http://www.talentinnovation.org/assets/IDMG-ExecSummFINAL-CTI.pdf</div>
-      </section>
-
-      <section>
-        <img src="lib/images/tech-innovation-center-image.jpg" style="width: 800px; margin-top: 34px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 78px;"> credit: http://www.talentinnovation.org/assets/IDMG-ExecSummFINAL-CTI.pdf</div>
-      </section>
-
-      <section>
-        <img src="lib/images/mckinsey-report.jpg" style="width: 800px; margin-top: 34px; margin-bottom: 0px;">
-        <div class="credit" style="padding-right: 80px"> credit: http://www.mckinsey.com/business-functions/organization/our-insights/why-diversity-matters</div>
-        <aside class="notes">
-          <ul>
-            <li>more diverse teams have a better understanding of the end user</li>
-            <li>are able to innovate more efficiently</li>
-            <li>and so are able to deliver better product</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section class="center">
-        <div> So we know diversity is important</div>
-      </section>
-
-      <section class="center">
-        <div> Yet there is still a problem</div>
-      </section>
-
-
-      <section>
-        <h3>Teach Leavers Study 2017</h3>
-        <img src="lib/images/tech-leavers-new.jpg" style="margin-top: 24px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 20px"> credit: http://www.kaporcenter.org/wp-content/uploads/2017/08/TechLeavers2017.pdf</div>
-        <aside class="notes">
-          <ul>
-            <li> people are leaving the Industry</li>
-            <li>we have all seen the news lately google manifesto, vs firms, uber</li>
-            <li> tech indsutry not always welcome place </li>
-          </ul>
-        </aside>
-      </section>
-
-
-      <section class="center">
-          <div>Anyone familiar with the term status distance?</div>
-          <aside class="notes">
-            <ul>
-              <li>Paper publishd by faculty - columbia university gradaute school of business</li>
-              <li>Katherine W. Phillips and Melissa C. Thomas-Hunt</Li>
-              <li>tooka look at status distance in groups</li>
-              <li>We refer ro the difference in value assigned to members of a group as the level of status
-                distance in the group</li>
-              <li>and argue that the status distance between members
-                often obscures the unique contributions that individuals are poised to make. </li>
-            </ul>
-          </aside>
-        </section>
-
-        <section class="center">
-          <h3>Status Distance === Bias</h3>
-        </section>
-
-      <section>
-        <img src="lib/images/fluency-heuristic.png" style="margin-top: 24px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 20px"> credit: https://www.gravityideas.com/thinking/fluency-heuristic</div>
-        <aside class="notes">
-          <ul>
-            <li>the more fluently, smoothly, or quickly we process something the more value we place on it</li>
-            <li>this leads to bias</li>
-            <li>often people who need to be heard are not</li>
-            <li>HBR study of women wearing sensors</li>
-            <li> gender differences in behavior drive gender differences in outcomes at one of our client organizations, a large multinational firm, where women were underrepresented in upper management.</li>
-          </ul>
-        </aside>
-    </section>
-
-      <section class="center">
-        <div> Check our own biases</div>
-        <aside class="notes">
-          <ul>who are the first 10 people your shared elixir with</ul>
-          <ul>does this group reflect the commuinity with want to see</ul>
-        </aside>
-      </section>
-
-      <section class="center">
-        <div>This brings us to ElixirBridge</div>
-        <img src="lib/images/eb-mark-color.png" />
-
-      </section>
-      <section class="center">
-        <div>But first....</div>
-      </section>
-
-          <section>
-            <h3> What is RailsBridge?</h3>
-            <img src="lib/images/railsbridge-boston-photo.jpg" />
-            <aside class="notes">
-              <ul>
-                <li>ElixirBridge is modeled after railsbridge</li>
-                <li>My start in RailsBridge</li>
-                <li>Interested in Elixir</li>
-                <li>My friend Matt came up to me and we talked about starting ElixirBridge</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section class="center">
-            <ul>
-              <li> Started by Sarah Allen &amp; Sarah Mei in 2009</li>
-              <li> Free weekendlong workshops for women</li>
-              <li>All volunteer run</li>
-              <li>Helped Ruby community in SF go from 2% women to 18% women in 1 year(2009-2010)</li>
-            </ul>
-          </section>
-
-
-          <section class="center">
-              <div><img src="lib/images/bridge-foundry-1.png" /></div>
-              <ul style="font-size: 28px; list-style: none;">
-                <li >RailsBridge</li>
-                <li>ClojureBridge</li>
-                <li>MobileBridge</li>
-                <li>GoBridge</li>
-                <li>ElixirBridge</li>
-                <li>ElmBridge</li>
-                <li>ScalaBridge</li>
-                <li>RustBridge</li>
-              </ul>
-
-              <aside class="notes">
-                <ul>
-                  <li>now its own 501c3</li>
-                  <li>8 difference bridges</li>
-                  <li>all working with a similar mission</li>
-                </ul>
-              </aside>
-          </section>
-
-          <section>
-            <h3>What is ElixirBridge?</h3>
-            <img src="lib/images/elixirbridge-workshop.jpg" style="width: 600px" />
-            <aside class="notes">
-              <ul>
-                <li> how it got started</li>
-                <li>so far workshops in SF, NYC, SEAttle, but lots of interest in other places</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h2>Schedule</h2>
-            <div style="text-align: left">Friday night: InstallFest</div>
-            <div style="text-align: left"> Saturday: Workshop</div>
-            <ul>
-              <li style="padding-bottom: 0px;">9:30 - 10:00am: Sign in, coffee, breakfast</li>
-              <li style="padding-bottom: 0px;">10:00 - 10:15am: Intro!</li>
-              <li style="padding-bottom: 0px;">10:30 - 12:30pm: Session 1</li>
-              <li style="padding-bottom: 0px;">12:30 - 1:30pm: Lunch!</li>
-              <li style="padding-bottom: 0px;">1:30 - 4:00pm: Session 3</li>
-              <li style="padding-bottom: 0px;">4:15 - 4:30pm: Retrospective</li>
-              <lis tyle="padding-bottom: 0px;">4:30 - 5pm: Happy Hour at TBD</li>
-            </ul>
-
-            <aside class="notes">
-              <ul>
-                <li>retrospective allows us to make sure we are meeting the needs of our community</li>
-                <li>Happy hour: Students and teachers can connect outside of a workshop setting</li>
-                <li>Another avenue that allows us to help build the community</li>
-              </ul>
-            </aside>
-
-          </section>
-
-          <section class="center">
-            <div> What has worked for us</div>
-
-          </section>
-
-          <section>
-            <h3>Welcoming inclusive environment</h3>
-            <ul>
-              <li>Code-of-Conduct</li>
-              <li>Goals</li>
-              <li>Rules</li>
-              <li>Resources</li>
-              <li>Accessibility
-            </ul>
-
-            <aside class="notes">
-              <ul>
-                <li>lots of things go into creating a welcoming inclusive environment</li>
-                <li>some of the core tenets want to go over</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h3>Code-of-Conduct</h3>
-            <ul>
-              <li>
-                <a href="https://bridgefoundry.org/code-of-conduct">https://bridgefoundry.org/code-of-conduct</a>
-              </li>
-              <li>Community reflective of the diversity in the general population.</li>
-              <li>A harassment-free experience for everyone</li>
-              <li>Everyone has something to contribute.</li>
-              <li>Anyone is allowed to hold a workshop</li>
-
-              <aside class="notes">
-                <ul>
-                  <li> seeen news lately. Google Manifesto, Uber, Vcs, yet again the Forking of Node.js</li>
-                  <li> Everyone deserves access to materials and community that will help them learn. As long as an individual
-                    can be respectful and not disruptive to other participants, they deserve to participate.</li>
-                  <li>All materials are open source</li>
-              </aside>
-          </section>
-
-          <section>
-            <h3> Clear Examples</h3>
-            <ul>
-              <li>Use your words and respect boundaries</li>
-              <li> If you feel like it would help to work directly on someone’s keyboard, ask first.</li>
-              <li>Refer participants to open and free material for follow-up learning.</li>
-              <li> Do not ask anyone out on a date.</li>
-          </section>
-
-          <section>
-            <h3> Grey Area</h3>
-
-            <ul>
-              <li>If you are not sure your behavior is appropriate. It probably isn't</li>
-              <li>Each person you interact with gets to define what that line is </li>
-              <li>Do not assume that your way of thinking is the norm</li>
-            </ul>
-            <aside class="notes">
-              <ul>
-                <li>Sometimes it’s not clear. Good conduct requires judgment. There is a gray area between warm and welcoming
-                  behavior and unacceptable.</li>
-                <li>If you just met the other person for the first time, consider offering your contact info, instead of requesting
-                  theirs.</li>
-                <li>A lot of these things sound basics. But they are important. People feel safe, they can get excited about
-                  learning and excited to come back>
-                  <li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h3>When things go wrong</h3>
-            <ul>
-              <li>What to do if you feel harrassed as a participant</li>
-              <li>As an organizer how to responds to harrassment</li>
-            </ul>
-
-            <aside class="notes">
-              <ul>
-                <li>In into we explain students tell organizers</li>
-                <li> ask them to documetn incident in writing</li>
-                <li>If there is legitimate threat or danger police will be notified</li>
-                <li>Outline how to respond if a student or volunteer complains of harrassment</li>
-                <li>how people act at a workhop really sets the tone of the workshop and space, and in effect becomes reflective
-                  of the organization's values</li>
-            </aside>
-          </section>
-
-          <section class="center">
-            <div>Everyone has limited knowledge but infinite potential</div>
-            <aside class="notes">
-              <ul>
-                <li>key to lowering intimidation factor</li>
-                <li>people able to really learn, don't have to worry about not knowing</li>
-                <li>changes the tone of the environment</li>
-            </aside>
-          </section>
-
-          <section class="center">
-            <div>"We teach people to code because we believe that the people making technology should accurately reflect the diversity
-              of those using it."</div>
-            <aside class="notes">
-              <ul>
-                <li>we saw this is crucial to companies</li>
-                <li>beneficial to community</li>
-                <li> people with diverse background and new ideas help us innovate</li>
-                <li>helps create more opportunities for community as a whole so we all benefit</li>
-              </ul>
-              <aside>
-          </section>
-
-
-          <section>
-            <div>Goals</div>
-
-            <ul>
-              <li>What is the mission?</li>
-              <li>Who is the audience?</li>
-              <li>Break macro goals into micro ones?</li>
-              <li>Create specific pieces of work people can take on?</li>
-            </ul>
-
-            <aside class="notes">
-              <ul>
-                <li>have a workshop a month in SF</li>
-                <li>add more advanced curricula</li>
-                <li>create infrastructure for anyone to put on a workshop</li>
-                <li> In process of putting together a board to help with this</li>
-                <li>Rao an helping with Phoenix Install fest</li>
-              </ul>
-
-            </aside>
-          </section>
-
-          <section>
-            <h3>Rules</h3>
-            <ul>
-              <li>What rules do you need in place to function?</li>
-              <li> example: how do you respond to a disruptive student?</li>
-              <li> If an organizers is being disruptive how is that dealt with?</li>
-            </ul>
-
-
-            <aside class="notes">
-              <div> if someone violates our code of conduct they are not welcome to particiapte in the organization</div>
-              <div> we make descisions by consensus</di>
-            </aside>
-
-          </section>
-
-          <section class="center">
-            <h3> Goals Vs. Rules</h3>
-            <aside class="notes">
-              <div> If rules are not serving goals, update them </div>
-            </aside>
-          </section>
-
-          <section>
-            <h3>Resources</h3>
-
-            <ul>
-              <li>Training teachers how to teach/how to ineract with students</li>
-              <li>Training teachers in conflict-resolution</li>
-              <aside class="notes" />
-              <ul>
-                <li>Not all teachers are good software developers</li>
-                <li>Dealing with a student being desctructive in class</li>
-                <li>Goal of promoting a welcoming environment</li>
-                </li>
-                </aside>
-              </ul>
-
-
-          </section>
-
-          <section>
-            <h3>Accessibility</h3>
-
-            <ul>
-              <li>Free</li>
-              <li>Food</li>
-              <li>Childcare</li>
-              <li>Installfest</li>
-              <li>Introductions</li>
-            </ul>
-
-            <aside class="notes">
-              <ul>
-                <li>story of Dave and Joe</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section class="center">
-            <div> Community of Practice</div>
-            <img src="lib/images/railsbridge-workshop1.jpg" />
-
-            <aside class="notes">
-              <ul>
-                <li>(students and teachers are sharing information adn learning from each other</li>
-                <li>we recreate the collaborative environment that is good software development</li>
-                <li>Building software is about people who all have an in-depth understanding of a problem, and who can collaborate
-                  and communicate effectively to bring something to life. what is going on in this shared context we all
-                  have</li>
-                <li> Volunteers learn just as much as students, teaching not only strengthens their foundations, but each indivudla
-                  has somethingto share</li>
-                <li> volunteers take these expereinces back to their workplaces </li>
-                <li>peoplge get to experience what positive software development is like</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <img src="lib/images/dont-know.jpg" style="margin-top: 34px;">
-            <aside class="notes">
-              <ul>
-                <li>Culture of question asking, it's ok not to know.
-                </li>
-                <li>Allies of underrepresented folks realize that as well</li>
-                <li>Culture of question asking and collaboration taken back to workplace</li>
-                <li>If people can't ask, they can't learn. so we are not doing our job as teachers</li>
-              </ul>
-            </aside>
-          </section>
-
-
-          <section>
-            <img src="lib/images/sleepingpuppy1.jpg" style="margin-top: 34px;" />
-          </section>
-
-          <section class="center">
-            <div>Sustainability/Outreach</div>
-            <aside class="notes">
-              <div> It's really hard</div>
-              <ul>
-                <li>Most community orgs are run by 1 or 2 people</li>
-                <li>Exhuasting</li>
-                <li>leads to burnout</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h3> How to keep it going</h3>
-            <ul>
-              <li>Be specific about what what the goals/tasks are. </li>
-              <li>Invite people in</li>
-              <li>Creat space for those who want to get involved.</li>
-              <li>Check your biases</li>
-              <li>Low commitment for students and volunteers</li>
-              <li>Help can be on many levels</li>
-            </ul>
-          </section>
-
-          <section class="center">
-            <div> Elixir community is young and excited about diversity</div>
-          </section>
 
           <section class="center" data-background-color="#025A6E">
             <div>Thank you!</div>
