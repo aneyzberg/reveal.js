@@ -832,7 +832,7 @@
           <section>
             So how do we actually communicate between other nodes?
             <aside class="notes">
-              we need some client-server behavior to all
+              we need some client-server behavior to allowe nodes to make requests and receive messages from each other.
             </aside>
           </section>
 
@@ -841,18 +841,232 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Elixir thanks to OTP provides a module for implmentin
+                  OTP provides us a behaviour module for implementing the server of a client-server relation.
+                <li>
+                <li>
+                  GenServer stands for generic server
                 </li>
+                <li>It does this by providing a set of generic callbacks that can be implemented</li>
+                <li>developers are only required to impement the ones they need</li>
+                <li>Genserers also allow us to maintian state</li>
               </ul>
             </aside>
           </section>
 
 
 
+          <section>
+            ```
+              defmodule Gossip.Server do
+                use GenServer
 
+                def start_link(_) do
+                  GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+                end
+
+                def init(_) do
+                  {:ok, %{id: self(), block_chain: []}, uuids: []}}
+                end
+
+                ......
+              end
+            ```
+          </section>
 
 
           <section>
+
+              ```
+              defmodule Gossip.Server do
+                use GenServer
+
+                ......
+
+                def send_message() do
+                  GenServer.cast( __MODULE__ , {:mine_and_gossip})
+                end
+
+                def handle_cast({:mine_and_gossip}, my_state) do
+                  ....
+                  blocks = BlockChain.add_block(transaction)
+                  ....
+                  new_block_chain = me
+                  |> Map.put(:block_chain, block_chain, locks)
+                  |> Map.put(:uuid, UUID.uuid4())
+
+
+                  send_block_chain(new_block_chain, Node.list)
+                  my_state = %{my_state | me: new_block_chain }
+                  {:noreply, my_state}
+                end
+              end
+            ```
+
+            <aside class="notes">
+              <ul>
+                <li>we want ot send messages to our peers</li>
+                <li>and we just need to send and do not need to wait for a response</li>
+                <li>so we can send asynchronously</li>
+                <li>Genserver behaviour makes it really easy</li>
+                <li>Genserver.cast allows us to make an asynchronous call - we specify the module and teh arugments to pattern match against</li>
+                <li>Genserver handle_cast is invoked ot handle asynchornous cast messages</li>
+                <li>it always returns :noreply and the state of the GenServer</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            So we just updated our current state of the block chain
+          </section>
+
+            <section>
+              How see our current state
+            </section>
+
+            <section>
+              ```elixir
+                defmodule Gossip.Server do
+                  use GenServer
+
+                  ......
+                  def retrieve_state() do
+                    GenServer.call( __MODULE__, {:retrieve_state} )
+                  end
+
+                  def handle_call({:retrieve_state}, from, my_state) do
+                     {:reply, my_state, my_state}
+                  end
+                end
+
+              ```
+
+              <aside class="notes">
+                <ul>
+                  <li>dealt with asynchronous transactions</li>
+                  <li>in this case can also deal with synchronous transactions</li>
+                </ul>
+              </aside>
+            </section>
+
+            <section >
+              So we just added a block to our peers, but how are the nodes able to receive it?
+            </section>
+
+            <section>
+              ```elixir
+
+              defmodule Gossip.Server do
+                  use GenServer
+
+                ......
+                def send_block_chain(new_block_chain, peers) do
+                  Enum.map(peers, fn (peer) ->
+                    Node.connect(peer)
+                    GenServer.cast({__MODULE__, peer}, {:message_from_peer, new_block_chain})
+                  end)
+                end
+
+                def handle_cast({:message_from_peer, block_chain_message = %{block_chain: blocks},  id: id, uuid: uuid }}, my_state) do
+                ...
+                    if !Enum.member?(my_state.uuids, block_chain_message.uuid) do
+                      case BlockChain.validate_blocks(blocks) do
+                        {:ok, true} ->
+                          updated_blocks = BlockChain.swap_chain(blocks)
+                          me = %{me | block_chain: blocks}
+                          my_state = %{my_state | me: me, uuids: uuids}
+
+                          send_block_chain(me, Node.list)
+                          {:noreply, my_state}
+                      ...
+                    end
+                  end
+                end
+              ```
+
+              <aside class="notes">
+                <ul>
+                  so again gen server provides us a really nice interface for sending and receiving messages, that makes this message passing easy
+                </ul>
+              </aside>
+            </section>
+
+            <section>
+              ```elixir
+
+                defmodule Gossip.Server do
+                    use GenServer
+
+                def init(_) do
+                    schedule_send_message()
+                    {:ok, %{ me: %{id: self(), block_chain: []}, uuids: []}}
+                  end
+                end
+
+                def handle_info(:schedule_send_message, state) do
+                  send_message()
+                  schedule_send_message()
+                  {:noreply, state}
+                end
+
+
+
+                defp schedule_send_message do
+                  Process.send_after(self(), :schedule_send_message, 30000) # In 30 seconds
+                end
+
+              ```
+
+              <aside class="notes">
+                <ul> handle info callback is used to handle all other messages. Allowing us to implement this times interval behavior</ul>
+              </aside>
+            </section>
+
+
+            <section>
+              and to keep an eye on this process we use another supervisor
+            </section>
+
+            <section>
+              ```elixir
+                defmodule Gossip.Application do
+                  use Application
+                  use Supervisor
+
+                  def start(_type, _args) do
+                    Supervisor.start_link([{Gossip.Server, []}, {Gossip.BlockChain, []}], strategy: :one_for_one, name: Gossip.Supervisor)
+                  end
+                end
+              ```
+            </section>
+
+            <section>
+              Distributed Elixir
+
+              <aside class="notes">
+                so we talk about a distrbuted netwrok, but how do we actually communicate
+              </aside>
+            </section>
+
+            <section>
+              ```
+                  def send_block_chain(new_block_chain, peers) do
+                    Enum.map(peers, fn (peer) ->
+
+                      Node.connect(peer)
+                      GenServer.cast({__MODULE__, peer}, {:message_from_peer, new_block_chain})
+                    end)
+                  end
+              ```
+
+              <aside class="notes">
+                <ul>Node.connect allows you to create a connectiosn to a peer node by passing in teh peer address</ul>
+                <ul>if  you connect node 1 to 2, adn 3, 2 nad 3 will know about each other</ul>
+                <ul>just as easy to connect on disributed machines</ul>
+              </aside>
+            </section>
+
+
+
 
 
 
