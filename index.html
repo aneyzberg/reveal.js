@@ -203,6 +203,10 @@
             <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: Eric Hughes "A Cypherpunk's Manifesto"</div>
       </section>
 
+      <section class="center">
+          Many Early attempts at digitial currencies failed
+        </section>
+
       <section>
           <img src="lib/images/hash_cash.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
           <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://twitter.com/lopp/status/877548439000817665/div>
@@ -220,9 +224,7 @@
         </section>
 
 
-      <section class="center">
-        Many Early attempts at digitial currencies failed
-      </section>
+
 
       <section class="center">
        <div>2008....</div>
@@ -329,6 +331,25 @@
 
       </section>
 
+      <section>
+          <img src="lib/images/block_chain_explanation.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
+
+          <aside class="notes">
+              <ul>
+                <li>A blockchain is a distributed database that maintains a continuously growing list of data records that cannot be tampered.</li>
+                <li>A blockchain consists of a number of blocks that are linked with each other with each block linked with its previous block.</li>
+                <li>and, each block consists of a batch of timestamped transactions and a hash of previous block. As the blocks are linked with each other forming a chain,
+                  hence the name of the database.</li>
+                <li>anonymity</li>
+                <li>it is very difficult to corrup the leger</li>
+                <li>uses sha256 encrypts it down </li>
+                <li>enforces order,  no global time</li>
+                <li>use blockchain to force an ordering of transactions</li>
+              </ul>
+          </aside>
+      </section>
+
 
 
       <section class="center">
@@ -348,24 +369,7 @@
           </aside>
       </section>
 
-      <section>
-          <img src="lib/images/block_chain_explanation.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
 
-          <aside class="notes">
-              <ul>
-                <li>A blockchain is a distributed database that maintains a continuously growing list of data records that cannot be tampered.</li>
-                <li>A blockchain consists of a number of blocks that are linked with each other with each block linked with its previous block.</li>
-                <li>and, each block consists of a batch of timestamped transactions and a hash of previous block. As the blocks are linked with each other forming a chain,
-                  hence the name of the database.</li>
-                <li>anonymity</li>
-                <li>it is very difficult to corrup the leger</li>
-                <li>uses sha256 encrypts it down </li>
-                <li>enforces order,  no global time</li>
-                <li>use blockchain to force an ordering of transactions</li>
-              </ul>
-          </aside>
-      </section>
 
       <section class="center">
 
@@ -438,16 +442,10 @@
 
 
       <section class="center">
-          So why think about this in the context of Elixir?
-
-
-
+          <div>So why think about this in the context of Elixir?</div>
         <aside class="notes">
           <ul>
-              <li>bitcoin uses blockchain to implement decentralized leger for payemnst</li>
-              <li>nodes send messages to the netwrok using a gossip protocol</li>
               <li>to crete new blocks you have to do some work </li>
-              <li>so we need a distributed system that is concurrent, that communicates via message passing, sound familiar</li>
               <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was like, I want to review teh properties of elixir that make it such good fit</li>
           </ul>
 
@@ -456,11 +454,20 @@
 
 
        <section class="center">
-          Network of distributed nodes that each have a copy of the block chain and communicate via message passing
+          <div>Bitcoin uses blockchain to implement decentralized leger for payments</div>
         </section>
 
         <section class="center">
-          Turns out elixir lends itself well to this!
+            <div>Nodes send messages to the network using a gossip protocol</div>
+        </section>
+
+
+        <section class="center">
+            <div>So we need a decentralized system that is concurrent, that communicates via message passing</div>
+        </section>
+
+        <section class="center">
+          <div>Sound familiar?</div>
         </section>
 
         <section class="center" b>
@@ -489,7 +496,7 @@
             <pre class="elixir"><code>
                 defmodule Example do
                   def subtract(a, b) do
-
+                    a - b
                   end
                 end
 
@@ -575,8 +582,8 @@
             </section>
 
 
-            <section>
-                <h1>Process Linking &amp; Process Montioring<h1>
+            <section class="center">
+                <div>Process Linking &amp; Process Montioring<div>
             </section>
 
 
@@ -633,39 +640,6 @@
               </aside>
             </section>
 
-            <section class="center" data-background-color="#3f3f3f">
-                <h3>Tasks</h3>
-
-                <pre class="elixir" style="font-size: 16px">
-                  <code>
-                    defmodule Example do
-                      def double(x) do
-                        :timer.sleep(2000)
-                        x * 2
-                      end
-                    end
-
-                    iex> task = Task.async(Example, :double, [2000])
-                    %Task{pid: #PID<0.111.0>, ref: #Reference<0.0.8.200>}
-
-                    #  Do some work
-
-                  iex> Task.await(task)
-                  4000
-
-                  </code>
-
-                </pre>
-
-                <aside class="notes">
-                    <ul>
-                      <li>Tasks provide a way to execute a function in the background and retrieve its return value later.
-                        They can be particularly useful when handling expensive operations without blocking the application execution.
-                      </li>
-                    </ul>
-                </aside>
-              </section>
-
 
               <section class="center">
                   Back to BlockChain
@@ -695,6 +669,51 @@
                 <section class="center">
                     <h3>So Let's start buildig</h3>
                 </section>
+
+                <section>
+                    <h1>Transactions</h1>
+                </section>
+
+                <section class="center" data-background-color="#3f3f3f">
+                  <pre class="elixir" style="font-size: 12px">
+                    <code>
+                      defmodule Gossip.Transaction do
+                        alias Gossip.Transaction
+                        alias Gossip.RSA
+
+
+                        defstruct to: '', from: '', amount: 0, signature: ''
+
+                        def new_transaction(to, from, amount, private_key) do
+                          %Transaction{
+                            to: to,
+                            from: from,
+                            amount: amount,
+                            signature: sign(private_key, {to, from, amount})
+                            }
+                        end
+
+                        def sign(priv_key, {to, from, amount}) do
+                          hash = :crypto.hash(:sha256, [to,  amount])
+                          {:ok, signature} = ExPublicKey.sign(hash, priv_key)
+                          signature
+                        end
+
+                        def valid?(pub_key, %Transaction{to: to, from: from, amount: amount, signature: signature}) do
+                          message = :crypto.hash(:sha256, [to, amount])
+                          {:ok, valid}  = ExPublicKey.verify(message, signature, from)
+                        end
+                      end
+
+                    </code>
+                  </pre>
+                    <aside class="notes">
+                      <ul>
+                        <li>explain transactions in blockchian</li>
+                      </ul>
+                    </aside>
+                  </section>
+
 
                 <section class="center">
                     We know we need to somehow build a chain of blocks
@@ -796,48 +815,12 @@
                         <li>so where are we storing the state. notice that to start that we have a start link function, that is starting an agent</li>
                         <li>remember agenst can stor state</li>
                         <li>So this module is storing our Block Chain struct as state in our agent process. and we can retreive manipulte and update that state</li>
+                        <li>So we have this background process maintaing our blockchain</li>
+                          <li>yet how do we know if its up, and what happends if it goes down</li>
+                          <li>So this is where we go back to some of the Powerful features of OTP</li>
                       </ul>
                     </aside>
                   </section>
-
-
-                  <section class="center" data-background-color="#3f3f3f">
-                    <pre class="elixir" style="font-size: 12px">
-                      <code>
-                          defmodule BlockChain do
-                            @work_factor 1
-                            @me __MODULE__
-                            @block_reward 100
-
-                            defstruct blocks: [], pub_key: nil, priv_key: nil
-
-                            def start_link() do
-                              {:ok, pid} = Agent.start_link(&amp;initial_state/0, name: @me)
-                            end
-
-                            def child_spec(_opts) do
-                              %{
-                                id: __MODULE__,
-                                start: {__MODULE__, :start_link, []},
-                                type: :worker,
-                                restart: :permanent,
-                                shutdown: 500
-                              }
-                            end
-                        end
-                      </code>
-                    </pre>
-                    <aside class="notes">
-                        <ul>
-                          <li>So we have this background process maintaing our blockchain</li>
-                          <li>yet how do we know if its up, and what happends if it goes down</li>
-                          <li>So this is where we go back to some of the Powerful features of OTP</li>
-                        </ul>
-                    </aside>
-                  </section>
-
-
-
 
                   <section class="center">
                       <div>Let's add a Supervisor</div>
@@ -860,13 +843,13 @@
                       <pre class="elixir" style="font-size: 16px">
                         <code>
                             defmodule Application do
-                            use Application
-                            use Supervisor
+                              use Application
+                              use Supervisor
 
-                            def start(_type, _args) do
-                              Supervisor.start_link([{Gossip.BlockChain, []}],
-                              strategy: :one_for_one, name: BlockChain.Supervisor)
-                            end
+                              def start(_type, _args) do
+                                Supervisor.start_link([{Gossip.BlockChain, []}],
+                                strategy: :one_for_one, name: BlockChain.Supervisor)
+                              end
                           end
                         </code>
                       </pre>
@@ -983,51 +966,6 @@
                           </aside>
 
                         </section>
-
-                        <section>
-                            <h1>Transactions</h1>
-                        </section>
-
-                        <section class="center" data-background-color="#3f3f3f">
-                          <pre class="elixir" style="font-size: 12px">
-                            <code>
-                              defmodule Gossip.Transaction do
-                                alias Gossip.Transaction
-                                alias Gossip.RSA
-
-
-                                defstruct to: '', from: '', amount: 0, signature: ''
-
-                                def new_transaction(to, from, amount, private_key) do
-                                  %Transaction{
-                                    to: to,
-                                    from: from,
-                                    amount: amount,
-                                    signature: sign(private_key, {to, from, amount})
-                                    }
-                                end
-
-                                def sign(priv_key, {to, from, amount}) do
-                                  hash = :crypto.hash(:sha256, [to,  amount])
-                                  {:ok, signature} = ExPublicKey.sign(hash, priv_key)
-                                  signature
-                                end
-
-                                def valid?(pub_key, %Transaction{to: to, from: from, amount: amount, signature: signature}) do
-                                  message = :crypto.hash(:sha256, [to, amount])
-                                  {:ok, valid}  = ExPublicKey.verify(message, signature, from)
-                                end
-                              end
-
-                            </code>
-                          </pre>
-                            <aside class="notes">
-                              <ul>
-                                <li>explain transactions in blockchian</li>
-                              </ul>
-                            </aside>
-                          </section>
-
 
                           <section>
                               So how do we actually communicate between other nodes?
