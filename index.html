@@ -75,9 +75,21 @@
       </section>
 
       <section class="center">
-          <img src="lib/images/value_of_money.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://www.youtube.com/watch?v=XNu5ppFZbHo</div>
+          <img src="lib/images/us_dollar.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://www.slideshare.net/AsharAzam/exchange-rates-international-financial-system</div>
+          <aside class="notes">
+              <ul>
+                  "create something scarce"
+                  "disincentive to buy into a system that grows in supply"
+                  "also people need to be using it"
+                  "paying taxes"
+              </ul>
+              <li>gollar has value because you can pay taxes</li>
+              <li>people are willing to use it, believe u.s economy is going to keep working</li>
+              <li>fiat's value is not about instrinsic value, but about making a guess about the future</li>
+            </aside>
       </section>
+
 
 
       <section class="center">
@@ -97,20 +109,11 @@
       </section>
 
       <section class="center">
-          <img src="lib/images/us_dollar.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-          <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://www.slideshare.net/AsharAzam/exchange-rates-international-financial-system</div>
-          <aside class="notes">
-              <ul>
-                  "create something scarce"
-                  "disincentive to buy into a system that grows in supply"
-                  "also people need to be using it"
-                  "paying taxes"
-              </ul>
-              <li>gollar has value because you can pay taxes</li>
-              <li>people are willing to use it, believe u.s economy is going to keep working</li>
-              <li>fiat's value is not about instrinsic value, but about making a guess about the future</li>
-            </aside>
+          <img src="lib/images/value_of_money.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://www.youtube.com/watch?v=XNu5ppFZbHo</div>
       </section>
+
+
 
 
       <!-- <section>
@@ -288,6 +291,24 @@
 
 
       <section class="center">
+          <img src="lib/images/block_chain_1.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://medium.com/@micheledaliessi/how-does-the-blockchain-work-98c8cd01d2ae</div>
+
+          <aside class="notes">
+              <ul>
+                <li>A blockchain is a distributed database that maintains a continuously growing list of data records that cannot be tampered.</li>
+                <li>A blockchain consists of a number of blocks that are linked with each other with each block linked with its previous block.</li>
+                <li>and, each block consists of a batch of timestamped transactions and a hash of previous block. As the blocks are linked with each other forming a chain,
+                  hence the name of the database.</li>
+                <li>anonymity</li>
+                <li>it is very difficult to corrup the leger</li>
+                <li>uses sha256 encrypts it down </li>
+              </ul>
+          </aside>
+      </section>
+
+
+      <section class="center">
           <p>"A gossip protocol[1] is a procedure or process of computer-computer communication that is based on the way social networks disseminate information or how epidemics spread.</p>
             <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://blockgeeks.com/guides/what-is-blockchain-technology/</div>
 
@@ -349,26 +370,6 @@
               </ul>
           </aside>
       </section>
-
-
-
-      <section class="center">
-          <img src="lib/images/block_chain_1.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://medium.com/@micheledaliessi/how-does-the-blockchain-work-98c8cd01d2ae</div>
-
-          <aside class="notes">
-              <ul>
-                <li>A blockchain is a distributed database that maintains a continuously growing list of data records that cannot be tampered.</li>
-                <li>A blockchain consists of a number of blocks that are linked with each other with each block linked with its previous block.</li>
-                <li>and, each block consists of a batch of timestamped transactions and a hash of previous block. As the blocks are linked with each other forming a chain,
-                  hence the name of the database.</li>
-                <li>anonymity</li>
-                <li>it is very difficult to corrup the leger</li>
-                <li>uses sha256 encrypts it down </li>
-              </ul>
-          </aside>
-      </section>
-
 
 
       <section class="center">
@@ -442,11 +443,12 @@
 
 
       <section class="center">
-          <div>So why think about this in the context of Elixir?</div>
+          <img src="lib/images/elixir_logo.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://brunakochi.com/projects/elixir.html</div>
         <aside class="notes">
           <ul>
-              <li>to crete new blocks you have to do some work </li>
-              <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was like, I want to review teh properties of elixir that make it such good fit</li>
+            <li>So why think about this in the context of Elixir?</li>
+            <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was like, I want to review teh properties of elixir that make it such good fit</li>
           </ul>
 
         </aside>
@@ -493,7 +495,8 @@
           </section>
 
           <section data-background-color="#3f3f3f">
-            <pre class="elixir"><code>
+            <pre class="elixir">
+              <code data-trim>
                 defmodule Example do
                   def subtract(a, b) do
                     a - b
@@ -510,7 +513,7 @@
 
 
           <section data-background-color="#3f3f3f">
-            <pre class="elixir"><code>
+            <pre class="elixir"><code data-trim>
                 spawn(Example, :subtract, [3, 2])
                 1
                 #PID<0.80.0>
@@ -549,7 +552,7 @@
             <section data-background-color="#3f3f3f">
 
               <pre class="elixir" style="font-size: 16px">
-                <code>
+                <code data-trim>
                     defmodule Greet do
                       def by_name do
                         receive do
@@ -589,7 +592,7 @@
 
             <section class="center" data-background-color="#3f3f3f">
                 <pre class="elixir" style="font-size: 16px">
-                  <code>
+                  <code data-trim>
                     defmodule Connection do
                       def explode, do: exit(:kaboom)
                     end
@@ -618,7 +621,7 @@
               <h3>Agents</h3>
 
               <pre class="elixir" style="font-size: 16px">
-                <code>
+                <code data-trim>
                   iex> {:ok, agent} = Agent.start_link(fn -> [1, 2, 3] end)
                   {:ok, #PID<0.65.0>}
 
@@ -670,13 +673,13 @@
                     <h3>So Let's start buildig</h3>
                 </section>
 
-                <section>
+                <section class="center">
                     <h1>Transactions</h1>
                 </section>
 
                 <section class="center" data-background-color="#3f3f3f">
                   <pre class="elixir" style="font-size: 12px">
-                    <code>
+                    <code data-trim>
                       defmodule Gossip.Transaction do
                         alias Gossip.Transaction
                         alias Gossip.RSA
@@ -728,7 +731,7 @@
 
                 <section class="center" data-background-color="#3f3f3f">
                     <pre class="elixir" style="font-size: 12px">
-                      <code>
+                      <code data-trim>
                           defmodule Block do
                             defstruct nonce: nil, previous_hash: nil, transaction: nil
                             ....
@@ -768,13 +771,13 @@
                   </section>
 
 
-                  <section>
-                      Ok, we have a block....How to we create a chain
+                  <section class="center">
+                      <div>Ok, we have a block....How to we create a chain</div>
                   </section>
 
                   <section class="center" data-background-color="#3f3f3f">
                     <pre class="elixir" style="font-size: 12px">
-                      <code>
+                      <code data-trim>
                         defmodule Gossip.BlockChain do
                           @work_factor 1
                           @me __MODULE__
@@ -841,7 +844,7 @@
 
                   <section  class="center" data-background-color="#3f3f3f">
                       <pre class="elixir" style="font-size: 16px">
-                        <code>
+                        <code data-trim>
                             defmodule Application do
                               use Application
                               use Supervisor
@@ -870,7 +873,7 @@
 
                     <section class="center" data-background-color="#3f3f3f">
                       <pre class="elixir" style="font-size: 14px">
-                        <code>
+                        <code data-trim>
                             defmodule BlockChain do
                             @work_factor 1
                             @me __MODULE__
@@ -921,23 +924,19 @@
 
                       <section class="center" data-background-color="#3f3f3f">
                         <pre class="elixir" style="font-size: 12px">
-                          <code>
+                          <code data-trim>
                               defmodule Gossip.BlockChain do
                                 @work_factor 1
                                 @me __MODULE__
                                 @block_reward 100
-
                                 ....
                                 def add_block(transaction) do
                                   add_new_block(transaction)
                                 end
                                 ...
-
                                 def update_and_retrieve_chain(block) do
                                   case Agent.update(@me, fn(block_chain) -> %{block_chain | blocks: [block | block_chain.blocks] } end ) do
-                                    :ok ->
-                                        get_state
-                                    _ -> IO.puts "did not update"
+                                    .....
                                   end
                                 end
 
@@ -967,16 +966,16 @@
 
                         </section>
 
-                          <section>
-                              So how do we actually communicate between other nodes?
+                          <section class="center">
+                              <div>So how do we actually communicate<br /> between other nodes? </div>
                             <aside class="notes">
                               we need some client-server behavior to allowe nodes to make requests and receive messages from each other.
                             </aside>
                           </section>
 
 
-                          <section>
-                              Introducing GenServer
+                          <section class="center">
+                              <h3>Introducing GenServer</h3>
                               <aside class="notes">
                                 <ul>
                                   <li>
@@ -995,7 +994,7 @@
 
                             <section class="center" data-background-color="#3f3f3f">
                                 <pre class="elixir" style="font-size: 12px">
-                                  <code>
+                                  <code data-trim>
                                       defmodule Gossip.Server do
                                         use GenServer
 
@@ -1015,7 +1014,7 @@
 
                             <section class="center" data-background-color="#3f3f3f">
                                 <pre class="elixir" style="font-size: 12px">
-                                  <code>
+                                  <code data-trim>
                                       defmodule Gossip.Server do
                                         use GenServer
 
@@ -1065,7 +1064,7 @@
 
                             <section class="center" data-background-color="#3f3f3f">
                               <pre class="elixir" style="font-size: 12px">
-                                <code>
+                                <code data-trim>
                                   defmodule Gossip.Server do
                                     use GenServer
 
@@ -1097,33 +1096,32 @@
 
                               <section class="center" data-background-color="#3f3f3f">
                                 <pre class="elixir" style="font-size: 12px">
-                                  <code>
+                                  <code data-trim>
                                       defmodule Gossip.Server do
-                                      use GenServer
+                                        use GenServer
 
-                                    ......
-                                    def send_block_chain(new_block_chain, peers) do
-                                      Enum.map(peers, fn (peer) ->
-                                        Node.connect(peer)
-                                        GenServer.cast({__MODULE__, peer}, {:message_from_peer, new_block_chain})
-                                      end)
-                                    end
+                                        ......
+                                        def send_block_chain(new_block_chain, peers) do
+                                          Enum.map(peers, fn (peer) ->
+                                            Node.connect(peer)
+                                            GenServer.cast({__MODULE__, peer}, {:message_from_peer, new_block_chain})
+                                          end)
+                                        end
 
-                                    def handle_cast({:message_from_peer, block_chain_message = %{block_chain: blocks},  id: id, uuid: uuid }}, my_state) do
-                                    ...
-                                        if !Enum.member?(my_state.uuids, block_chain_message.uuid) do
-                                          case BlockChain.validate_blocks(blocks)  &amp;&amp; length(blocks) > length(me.block_chain)do
-                                            {:ok, true} ->
-                                              updated_blocks = BlockChain.swap_chain(blocks)
-                                              me = %{me | block_chain: blocks}
-                                              my_state = %{my_state | me: me, uuids: uuids}
-
-                                              send_block_chain(me, Node.list)
-                                              {:noreply, my_state}
-                                          ...
+                                        def handle_cast({:message_from_peer, block_chain_message = %{block_chain: blocks},  id: id, uuid: uuid }}, my_state) do
+                                        ...
+                                            if !Enum.member?(my_state.uuids, block_chain_message.uuid) do
+                                              case BlockChain.validate_blocks(blocks)  &amp;&amp; length(blocks) > length(me.block_chain)do
+                                                {:ok, true} ->
+                                                  updated_blocks = BlockChain.swap_chain(blocks)
+                                                  .....
+                                                  send_block_chain(updated_blocks, Node.list)
+                                                  {:noreply, my_state}
+                                              ...
+                                            end
+                                          end
                                         end
                                       end
-                                    end
 
                                   </code>
                                 </pre>
@@ -1139,7 +1137,7 @@
                                 </section>
 
 
-                                <section class="center">
+                                <!-- <section class="center">
                                     <h3></h3>Fork Choice rule
 
                                     <h2>Message passing</h2>
@@ -1161,12 +1159,12 @@
                                        </ul>
                                      </aside>
 
-                                  </section>
+                                  </section> -->
 
 
                                   <section class="center" data-background-color="#3f3f3f">
                                       <pre class="elixir" style="font-size: 12px">
-                                        <code>
+                                        <code data-trim>
                                             defmodule Gossip.Server do
                                               use GenServer
 
@@ -1203,15 +1201,16 @@
                                         To keep an eye on this process we use another supervisor
                                       </section>
 
-                                      <section class="center">
-                                          <pre class="elixir" style="font-size: 12px">
-                                            <code>
+                                      <section class="center" data-background-color="#3f3f3f">
+                                          <pre class="elixir" style="font-size: 14px">
+                                            <code data-trim>
                                               defmodule Gossip.Application do
                                                 use Application
                                                 use Supervisor
 
                                                 def start(_type, _args) do
-                                                  Supervisor.start_link([{Gossip.Server, []}, {Gossip.BlockChain, []}], strategy: :one_for_one, name: Gossip.Supervisor)
+                                                  Supervisor.start_link([{Gossip.Server, []}, {Gossip.BlockChain, []}],
+                                                  strategy: :one_for_one, name: Gossip.Supervisor)
                                                 end
                                               end
 
@@ -1230,15 +1229,15 @@
 
 
                                         <section class="center" data-background-color="#3f3f3f">
-                                            <pre class="elixir" style="font-size: 12px">
-                                              <code>
-                                                def send_block_chain(new_block_chain, peers) do
-                                                  Enum.map(peers, fn (peer) ->
+                                            <pre class="bash" style="font-size: 18px">
+                                              <code data-trim>
+                                                  iex --sname anna1@annasmbk
+                                                  --------------------------------
 
-                                                    Node.connect(peer)
-                                                    GenServer.cast({__MODULE__, peer}, {:message_from_peer, new_block_chain})
-                                                  end)
-                                                end
+                                                  iex --sname anna2@annasmbk
+                                                  ------------------------------------
+
+                                                  iex --sname anna3@annasmbk
 
                                               </code>
                                             </pre>
@@ -1251,11 +1250,24 @@
                                             </aside>
                                         </section>
 
+                                        <section class="center" data-background-color="#3f3f3f">
+                                            <pre class="elixir" style="font-size: 18px">
+                                              <code data-trim>
+                                                  def connect_to_peers(peers) do
+                                                    Enum.map(peers, fn (peer) -> Node.connect(peer) end)
+                                                  end
+
+                                              </code>
+                                            </pre>
+
+                                        </section>
+
+
 
                                         <section class="center" data-background-color="#3f3f3f">
-                                          <pre class="bash" style="font-size: 12px">
-                                            <code>
-                                                iex --name anna1@ip --cookie pb -S mix
+                                          <pre  class="bash" style="font-size: 18px">
+                                            <code data-trim>
+                                              iex --name anna1@ip --cookie pb -S mix
                                             </code>
 
                                           </pre>
@@ -1276,9 +1288,15 @@
                                           </section>
 
 
-                                          <section>
-                                              Live Demo Time (that's always a good ide aright?)
+                                          <section class="center">
+                                              <h3>Let's try it!</h3>
                                           </section>
+
+
+                                          <section class="center" data-background-color="#025A6E">
+                                              <h2>Thank you!</h2>
+                                              <p style="font-size: 30px">Anna Neyzberg • @ANeyzb • anna@carbonfive.com</p>
+                                            </section>
 
 
 
