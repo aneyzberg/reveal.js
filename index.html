@@ -80,16 +80,18 @@
         <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://www.slideshare.net/AsharAzam/exchange-rates-international-financial-system</div>
         <aside class="notes">
           <ul>
-            "create something scarce" "disincentive to buy into a system that grows in supply" "also people need to be using it" "paying
-            taxes"
+           <li> "create something scarce" "disincentive to buy into a system that grows in supply" "also people need to be using it" "paying
+            taxes"</li>
+            <li>gollar has value because you can pay taxes</li>
+            <li>people are willing to use it, believe u.s economy is going to keep working</li>
+            <li>fiat's value is not about instrinsic value, but about making a guess about the future</li>
+            <li>First bank notes bank of Stockholm in the 17th Century</li>
+            <li>Fast forward to 1944 post WWII - all allied countries got together for the breton woods agreement - pegged currencies to gold </li>
+            <li> 1971 nixon ends dollarrs convertability to gold</li>
           </ul>
-          <li>gollar has value because you can pay taxes</li>
-          <li>people are willing to use it, believe u.s economy is going to keep working</li>
-          <li>fiat's value is not about instrinsic value, but about making a guess about the future</li>
+
         </aside>
       </section>
-
-
 
       <section class="center">
         <div>"Money is any clearly identifiable object of value that is generally accepted as payment for goods and services and
@@ -107,12 +109,11 @@
         </aside>
       </section>
 
+
       <section class="center">
         <img src="lib/images/value_of_money.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
         <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://www.youtube.com/watch?v=XNu5ppFZbHo</div>
       </section>
-
-
 
 
       <!-- <section>
@@ -147,8 +148,18 @@
 
       <section class="center">
         Do value transfer over the internet
-        <br/>
-        <br /> that is anonymous and secure
+        <aside class="notes">
+          <ul>
+            <li>first time we have a stoer of value that is comletely digital</li>
+            <li>people are willing to use and can excahnge for goods and servces</li>
+            <li>it is scarce</li>
+          </ul>
+        </aside>
+
+      </section>
+
+      <section class="center">
+       That is anonymous and secure
         <aside class="notes">
           <ul>
             <li>first time we have a stoer of value that is comletely digital</li>
@@ -398,7 +409,9 @@
       <section class="notes">
         <img src="lib/images/block_chain_explanation.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
         <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
-
+        <aside class="notes">
+          <ul><li>the hash creted by a block when it solves the proof of work puzzle is what the next block will use to point to it</li></ul>
+        </aside>
       </section>
 
       <section class="center">
@@ -565,41 +578,6 @@
       </section>
 
       <section data-background-color="#fffff">
-
-        <pre class="elixir" style="font-size: 18px">
-                <code style="overflow: hidden; overflow-x: none;" data-trim>
-                    defmodule Greet do
-                      def by_name do
-                        receive do
-                          {:name, name} -> IO.puts("Hello #{name}")
-                        end
-
-                        by_name
-                      end
-                    end
-
-                    iex> pid = spawn(Greet, :by_name, [])
-                    #PID<0.108.0>
-
-                    iex> send pid, {:name, "Ben"}
-                    "Hello Ben"
-                    {:name, "Ben"}
-
-                    iex> send pid, :ok
-                    :ok
-                </code>
-              </pre>
-
-        <aside class="notes">
-          <ul>
-            <li>create a process</li>
-            <li>pass in our arguemtne which is a tuple of name and teh string "bem</li>
-            <li>if matches it recieve expected string "hello ben"</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section data-background-color="#fffff">
         <pre class="elixir" style="font-size: .7em">
                 <code style="overflow: hidden; overflow-x: none;" data-trim>
                     defmodule Greet do
@@ -675,6 +653,7 @@
           <ul>
             <li>other things that we can do with processes</li>
             <li>problen with spawn is we don't know if our process crashes</li>
+            <li>Allows exits from a process to propagate to other processes</li>
             <li>this allows our processes to recieve exit notifications from each other</li>
             <li>now we don't want to our current process to die, we can trap the exit messages and handle them so current process
               does not die </li>
@@ -992,7 +971,7 @@
 
 
       <section class="center">
-        <div>Ok, we have a block....How to we create a chain</div>
+        <div>Ok, we have a block....How do we create a chain</div>
       </section>
 
       <section class="center" data-background-color="#fffff">
@@ -1247,7 +1226,7 @@
             <li>
               Agent makes it really easy to maintain and update state of blockchian
             </li>
-            <li>given the blockchain is an irreversible leger, we will only want to add blocks to the chain</li>
+            <li>given the blockchain is an irreversible ledger, we will only want to add blocks to the chain</li>
             <li>Having an agent store the state makes this really easy</li>
           </ul>
         </aside>
@@ -1346,7 +1325,7 @@
                                           blocks = BlockChain.add_block(transaction)
                                           ....
                                           new_block_chain = me
-                                          |> Map.put(:block_chain, block_chain, locks)
+                                          |> Map.put(:block_chain, block_chain, blocks)
                                           |> Map.put(:uuid, UUID.uuid4())
 
 
