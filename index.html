@@ -515,13 +515,36 @@
         <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://bitcoinexchangeguide.com/vitalik-buterin-crypto-exchanges-burn-in-hell/</div>
       </section>
 
-      
+      <section class="center">
+        <img src="lib/images/two_types_of_exchanges.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://www.cryptocompare.com/exchanges/guides/what-is-a-decentralized-exchange/</div>
+      </section>
+
+      <section class="center">
+        <img src="lib/images/centralized_exchange.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://medium.com/everbloom/what-are-decentralized-exchanges-and-why-should-you-use-one-1325bc0b4fd6/</div>
+      </section>
+
+      <section class="center">
+        <div>Centralized Exchanges</div>
+      </section>
+
+      <section class="center">
+        <div>
+          <ul>
+            <li>Account</li>
+            <li>Manage Accounts</li>
+            <li>Place orders(asks and bids)</li>
+            <li>Match orders</li>
+            <li>Settle accounts</Li>
+          </ul>
+        </div>
+      </section>
 
 
 
 
-
-      <!-- <section class="center">
+      <section class="center">
         <img src="lib/images/elixir_logo.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
         <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://brunakochi.com/projects/elixir.html</div>
         <aside class="notes">
@@ -531,14 +554,239 @@
               like, I want to review teh properties of elixir that make it such good fit</li>
           </ul>
         </aside>
-      </section> -->
+      </section>
 
-      <!-- <section class="center" b>
+
+      <section class="center">
+        <div>
+          <ul>
+            <li>Account</li>
+            <li>Manage Accounts</li>
+            <li>Place orders(asks and bids)</li>
+            <li>Match orders</li>
+            <li>Settle accounts</Li>
+          </ul>
+        </div>
+      </section>
+
+       <section class="center" b>
         Let's take a quick look at how
         <br /> message passing works in elixir
       </section>
 
+      <section class="center">
+        <h2>Message passing</h2>
+        <img src="lib/images/process_message_passing.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://benjamintan.io/blog/2013/06/25/elixir-for-the-lazy-impatient-and-busy-part-2-processes-101/</div>
 
+
+        <aside class="notes">
+          <ul>
+            <li>processes communicate by passing messages</li>
+            <li>here are two main components to this: send/2 and receive</li>
+            <li>send function allows us to send to PIDs and receive function allows us to match messsges</li>
+            <li>processes are isolated from each other, run concurrent to one another, and communicate via message passing. </li>
+            <li>small programs communciate to each other via message passing, supe rlight weight</li>
+            <li>they seem like native threads but are simpler, and can have thousands of processes running concurrently</li>
+            <li>thanks to the erlang VM, our processes are working across all your CPU's so you are maximizng efficiency.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-background-color="#fffff">
+        <pre class="elixir" style="font-size: 1em;" data-background-color="#fffff">
+              <code data-trim style="overflow: hidden; overflow-x: none;" data-noescape>
+
+                defmodule Example do
+                    subtract(a, b) do
+                    a - b
+                  end
+                end
+
+
+                iex> Example.subtract(3, 2)
+                1
+                :ok
+            </code></pre>
+      </section>
+
+      <section data-background-color="#fffff">
+        <pre class="elixir" style="font-size: 1em; margin: 150px 0"><code data-trim>
+                spawn(Example, :subtract, [3, 2])
+                1
+                #PID<0.80.0>
+            </code>
+
+            </pre>
+        <aside class="notes">
+          <ul>
+            <li>easiest way to create a process is to call spawn</li>
+            <li>spawn takes an anonymous or named function</li>
+            <li>spawn returns a process Identifier or PID</li>
+          </ul>
+        </aside>
+
+      </section>
+
+
+      <section data-background-color="#fffff">
+        <pre class="elixir" style="font-size: .7em">
+                <code style="overflow: hidden; overflow-x: none;" data-trim>
+                    defmodule Greet do
+                      def by_name do
+                        receive do
+                          {:name, name} -> IO.puts("Hello #{name}")
+                        end
+
+                        by_name
+                      end
+                    end
+                </code>
+              </pre>
+
+        <aside class="notes">
+          <ul>
+            <li>create a process</li>
+            <li>pass in our arguemtne which is a tuple of name and teh string "bem</li>
+            <li>if matches it recieve expected string "hello ben"</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-background-color="#fffff">
+
+        <pre class="elixir" style="font-size: .7em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                  iex> pid = spawn(Greet, :by_name, [])
+                  #PID<0.108.0>
+
+                  iex> send pid, {:name, "Ben"}
+                  "Hello Ben"
+                  {:name, "Ben"}
+
+                  iex> send pid, :ok
+                  :ok
+              </code>
+            </pre>
+
+        <aside class="notes">
+          <ul>
+            <li>create a process</li>
+            <li>pass in our arguemtne which is a tuple of name and teh string "bem</li>
+            <li>if matches it recieve expected string "hello ben"</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="center" data-background-color="#fffff">
+        <pre class="elixir" style="font-size: .7em">
+          <code style="overflow: hidden; overflow-x: none;" data-trim>
+                      defmodule Exchange.Account do
+                        @me __MODULE__
+                        alias Exchange.Account
+
+                        defstruct id: nil, balance: 0
+
+                      end
+
+                    </code>
+                  </pre>
+
+        <aside class="notes">
+          <ul>
+            <ul>
+              <li>Agents are an abstraction around background processes maintaining state. We can access them from other processes
+                within our application and node. The state of our Agent is set to our function’s return value:
+              </li>
+              <li>agents are actually what we are going to use to store the state of our blockchain</li>
+            </ul>
+          </ul>
+        </aside>
+      </section>
+
+
+      <section class="center" data-background-color="#fffff">
+        <pre class="elixir" style="font-size: .7em">
+          <code style="overflow: hidden; overflow-x: none;" data-trim>
+                      defmodule Exchange.Account do
+                        ...
+
+                        def get_account(pid) do
+                          Agent.get(pid, fn(state) -> state end)
+                        end
+                      end
+
+                    </code>
+                  </pre>
+
+        <aside class="notes">
+          <ul>
+            <ul>
+            </ul>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="center" data-background-color="#fffff">
+        <pre class="elixir" style="font-size: .4em">
+          <code style="overflow: hidden; overflow-x: none;" data-trim>
+                      defmodule Exchange.Account do
+                        ...
+
+                        def add_amount(pid, amount) do
+                         Agent.update(pid, fn(state) -> %{state | balance: state.balance + amount} end)
+                        end
+
+                        def subtract_amount(pid, amount) do
+                          Agent.update(pid, fn(state) -> %{state | balance: state.balance - amount} end)
+                        end
+                      end
+
+                    </code>
+                  </pre>
+
+        <aside class="notes">
+          <ul>
+            <ul>
+            </ul>
+          </ul>
+        </aside>
+      </section>
+
+
+      <section class="center">
+        <div>
+          <ul>
+            <li>Manage Accounts</li>
+            <li>Place orders(asks and bids)</li>
+            <li>Match orders</li>
+            <li>Settle accounts</Li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="center">
+        <h3>Introducing GenServer</h3>
+        <aside class="notes">
+          <ul>
+            <li>
+              OTP provides us a behaviour module for implementing the server of a client-server relation.
+              <li>
+                <li>
+                  GenServer stands for generic server
+                </li>
+                <li>It does this by providing a set of generic callbacks that can be implemented</li>
+                <li>developers are only required to impement the ones they need</li>
+                <li>Genserers also allow us to maintian state</li>
+          </ul>
+        </aside>
+      </section> 
+
+
+
+
+
+      <!--
       <section class="center">
         <h2>Processes</h2>
         <aside class="notes">
@@ -591,21 +839,6 @@
 
       </section>
 
-
-      <section class="center">
-        <h2>Message passing</h2>
-        <img src="lib/images/process_message_passing.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://benjamintan.io/blog/2013/06/25/elixir-for-the-lazy-impatient-and-busy-part-2-processes-101/</div>
-
-
-        <aside class="notes">
-          <ul>
-            <li>processes communicate by passing messages</li>
-            <li>here are two main components to this: send/2 and receive</li>
-            <li> send function allows us to send to PIDs and receive function allows us to match messsges</li>
-          </ul>
-        </aside>
-      </section>
 
       <section data-background-color="#fffff">
         <pre class="elixir" style="font-size: .7em">
