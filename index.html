@@ -764,6 +764,16 @@
           </ul>
         </div>
       </section>
+      <section class="center">
+        <div>This brings us to OTP</div>
+        <aside class="notes">
+          <ul>
+              <li>When we think about how to build concurrent applications, and how to deal with monitorin, and timeouts etc, adn servers, there are things to think about.</li>
+              <li>OTP framework takes care of this by grouping these essential practices into a set of libraries that have been carefully engineered and battle-hardened over years.</li>
+              <li>The OTP framework is also a set of modules and standards designed to help you build applications. </li>
+          <ul>
+      </aside>
+    </section>
 
       <section class="center">
         <h3>Introducing GenServer</h3>
@@ -780,7 +790,607 @@
                 <li>Genserers also allow us to maintian state</li>
           </ul>
         </aside>
-      </section> 
+      </section>
+
+
+      <section class="center" data-background-color="#fffff">
+          <pre class="elixir" style="font-size: .4em">
+            <code style="overflow: hidden; overflow-x: none;" data-trim>
+                        defmodule Exchange.AccountServer do
+                          use GenServer
+
+                          def start_link(initial_args) do
+                            GenServer.start_link(__MODULE__, initial_args, name: __MODULE__)
+                          end
+
+                          def init do
+                          end
+
+                          def handle_info do
+                          end
+
+                          def handle_cast do
+                          end
+
+                          def handle_call do
+                          end
+
+                          def terminate do
+                          end
+                        end
+
+                      </code>
+                    </pre>
+
+          <aside class="notes">
+            <ul>
+              <ul>
+              </ul>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+                            def init do
+                              {:ok, %{accounts: %{}, refs: %{}, number_of_accounts: number_of_accounts } }
+                            end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section class="center" data-background-color="#fffff">
+              <pre class="elixir" style="font-size: .4em">
+                <code style="overflow: hidden; overflow-x: none;" data-trim>
+                            defmodule Exchange.AccountServer do
+                              use GenServer
+                              def init do
+                                schedule_create_new_accounts()
+                                {:ok, %{accounts: %{}, refs: %{}, number_of_accounts: number_of_accounts } }
+                              end
+
+                              def schedule_create_new_accounts do
+                                send(self(), :schedule_create_new_accounts)
+                              end
+                          </code>
+                        </pre>
+
+              <aside class="notes">
+                <ul>
+                  <ul>
+                    <li> generate accounts</li>
+                    <li>manage generation of asks and bids by accounts</li>
+                    <li>update accounts based on matches</li>
+                  </ul>
+                </ul>
+              </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def handle_info(:schedule_create_new_accounts, state) do
+                              updated_state = generate_accounts(state)
+                              {:noreply, updated_state}
+                            end
+                          end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def generate_accounts(state = %{accounts: accounts, refs: refs, number_of_accounts: number_of_accounts})
+                              when number_of_accounts == 0 do
+                                state
+                            end
+
+                            def generate_accounts(state) do
+                              updated_state = create_account(state)
+                              generate_accounts(%{...number_of_accounts: updated_state.number_of_accounts - 1})
+                            end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def create_account(state) do
+                              id = auto_increment(state.accounts)
+                              balance = Enum.random(2000..3000)
+                              {:ok, pid} = Account.start_link(id, balance)
+
+                              ref = Process.monitor(pid)
+
+                              ....
+                              %{state | accounts: accounts, refs: refs}
+                          end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def schedule_send_ask_request do
+                              Process.send_after(self(), :schedule_send_ask_request, 10000)
+                            end
+
+                            def schedule_send_bid_request do
+                              Process.send_after(self(), :schedule_send_bid_request, 15000)
+                            end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def handle_info(:schedule_send_ask_request, state) do
+                              send_ask_request(state)
+                              schedule_send_ask_request()
+                              {:noreply, state}
+                            end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def send_ask_request(state = %{accounts: accounts, refs: refs, number_of_accounts: number_of_accounts}) do
+                              account_id = Map.keys(accounts) |> Enum.random
+                              account_pid = accounts[account_id].pid
+                              current_balance = Account.get_account(account_pid).balance
+
+                              response = GenServer.call(AskServer, {:send_ask, %{account_id: random_account_id, balance: current_balance }})
+                          end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                  defmodule Exchange.Bitcoin.AskServer  do
+                  use GenServer
+
+                  alias Db.Ask
+                  alias Exchange.OrderBookServer
+
+                  def init(_) do
+                    {:ok, %{ask_orders: [], ask_id: 0 }}
+                  end
+
+
+                  def handle_call({:send_ask, account_info = %{account_id: account_id, balance: balance}}, from,  state = %{ ask_orders: orders, ask_id: value })  do
+                    ask = generate_ask(account_id)
+                    ask_value = ask.price * ask.size
+                    case (ask_value <= balance) do
+                      true ->
+                        updated_state = %{state | ask_orders: [ ask | state.ask_orders]}
+                        {:reply, {:ok, ask }, updated_state}
+                      false -> {:reply, {:error, "There is not enough money in the account to place an ask"}, state }
+                    end
+                  end
+                end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                  defmodule Exchange.Bitcoin.AskServer  do
+                    use GenServer
+
+                    alias Db.Ask
+                    alias Exchange.OrderBookServer
+
+                    def generate_ask(ask_id, account_id) do
+                      ask =  %Ask{
+                          ask_id: ask_id,
+                          account_id: account_id,
+                          price: Enum.random(80..90),
+                          size: :rand.uniform(10),
+                          side: "ask",
+                          currency: "btc"
+                        }
+                    end
+                  end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+            </aside>
+        </section>
+
+
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.AccountServer do
+                            use GenServer
+
+                            def send_ask_request(state = %{accounts: accounts, refs: refs, number_of_accounts: number_of_accounts}) do
+                              ....
+                              case response do
+                                {:ok, ask } ->
+                                  GenServer.cast(OrderBookServer, {:latest_ask, ask })
+                                {:error, reason } ->
+                                  IO.puts reason
+                              end
+                          end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>generate accounts</li>
+                  <li>manage generation of asks and bids by accounts</li>
+                  <li>update accounts based on matches</li>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+          <section class="center">
+            <div>
+              What is an OrderBook?
+            </div>
+          </section>
+
+
+      <section class="center">
+          <img src="lib/images/orderbook.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+          <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: http://allcoinsnews.com/2018/01/06/binance-app-crypto-trading-made-easy/</div>
+          <aside class="notes">
+            <ul>
+            </ul>
+
+          </aside>
+      </section>
+
+
+      <section class="center" data-background-color="#fffff">
+          <pre class="elixir" style="font-size: .4em">
+            <code style="overflow: hidden; overflow-x: none;" data-trim>
+                        defmodule Exchange.OrderBookServer do
+                          use GenServer
+
+                          defstruct  asks: [], bids: [], matches: []
+
+                          def start_link(_) do
+                            GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+                          end
+
+
+                          def handle_cast({:latest_ask, ask}, state = %OrderBookServer{asks: asks, bids: bids, matches: matches}) do
+                            updated_state = %{state | asks:  [ ask | asks ]}
+                            { :noreply, updated_state }
+                          end
+                      </code>
+                    </pre>
+
+          <aside class="notes">
+            <ul>
+              <ul>
+              </ul>
+            </ul>
+        </aside>
+      </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.OrderBookServer do
+                            use GenServer
+
+
+                            def handle_info(:schedule_send_message, state) do
+                              send_message()
+                              schedule_send_message()
+                              {:noreply, state}
+                            end
+
+                            def schedule_send_message do
+                              Process.send_after(self(), :schedule_send_message, 30000)
+                            end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                          defmodule Exchange.OrderBookServer do
+                            use GenServer
+
+
+                          def send_message() do
+                            GenServer.cast(__MODULE__, :check_matches)
+                          end
+
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                defmodule Exchange.OrderBookServer do
+
+                  def handle_cast(:check_matches, state = %OrderBookServer{asks: asks, bids: bids, matches: matches }) do
+                  new_matches = find_matches(asks, bids)
+
+                  ......
+                  #update asks and bids
+
+                  updated_matches = new_matches ++ matches
+
+                  updated_state = case Enum.empty?(new_matches) do
+                    true -> state
+                    false ->
+                      GenServer.cast(AccountServer, {:updated_matches, updated_matches})
+                      %{state | matches: updated_matches, asks: updated_asks, bids: updated_bids }
+                  end
+
+
+                  {:noreply, updated_state}
+                end
+
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                defmodule Exchange.AccountServer do
+
+                  def handle_cast({:updated_matches, updated_matches}, state) do
+                    Enum.each(updated_matches, &(AccountServer.update_account(&1, state)))
+                    {:noreply, state}
+                  end
+                end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                defmodule Exchange.AccountServer do
+                  def update_account(match, %{accounts: accounts, refs: refs, number_of_accounts: number_of_accounts}) do
+                    ask_value = retrieve_ask_value(ask_account_id)
+                    ask_process_id = accounts[ask_account_id].pid
+
+                    Account.add_amount(ask_process_id, ask_value)
+
+                    bid_value = retrieve_bid_value(bid_account_id)
+                    bid_process_id = accounts[bid_account_id].pid
+
+                    Account.subtract_amount(bid_process_id, bid_value)
+                  end
+                end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>naieve version of matching</li>
+                  <li>next version will allow for partial fills</li>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+        <section class="center" data-background-color="#fffff">
+            <div>Supervision</div>
+
+            <aside class="notes">
+                <ul>
+                  <li>Supervisors are specialized processes with one purpose: monitoring other processes. </li>
+                  <li>These supervisors enable us to create fault-tolerant applications by automatically restarting child processes
+                    when they fail.</li>
+                </ul>
+            </aside>
+        </section>
+
+
+        <section class="center" data-background-color="#fffff">
+            <pre class="elixir" style="font-size: .4em">
+              <code style="overflow: hidden; overflow-x: none;" data-trim>
+                  defmodule Exchange.Application do
+                    use Application
+                    use Supervisor
+
+                    def start(_type, _args) do
+                      children = [
+                        { Exchange.Bitcoin.BidServer, [] },
+                        { Exchange.Bitcoin.AskServer, [] },
+                        { Exchange.OrderBookServer, [] },
+                        { Exchange.AccountServer, [10]}
+                      ]
+                      Supervisor.start_link(
+                      children, strategy: :one_for_one, name: Exchange.Supervisor)
+                    end
+                  end
+                        </code>
+                      </pre>
+
+            <aside class="notes">
+              <ul>
+                <ul>
+                  <li>naieve version of matching</li>
+                  <li>next version will allow for partial fills</li>
+                </ul>
+              </ul>
+          </aside>
+        </section>
+
+
+
+
+
+        <section class="center">
+          <div>DEMO</div>
+        </section>
+
+
+
+
+
+
 
 
 
