@@ -29,16 +29,23 @@
     <div class="slides">
       <section class="center" data-background-color="#025A6E">
         <h2>Crypto + Concurrency</h2>
-        <p style="font-size: 30px">Anna Neyzberg • @ANeyzb • anna@carbonfive.com</p>
+
       </section>
 
-      <section>
-        <h3>About me:</h6>
-          <ul>
-            <li>I co-founded ElixirBridge founders</li>
-          </ul>
+      <section class="center">
+        <img src="lib/images/rockclimbing.jpg" width="600px" />
+      </section>
 
-          <img src="lib/images/rockclimbing.jpg" width="400px" />
+
+
+      <section class="center">
+        <img src="lib/images/elixir_outlaws.png" width="600px" />
+
+      </section>
+
+      <section class="center">
+        <img src="lib/images/elixirbridge.png" width="600px" />
+
       </section>
 
       <section class="center">
@@ -49,8 +56,8 @@
         <div>
           <ul>
             <li>What is Bitcoin/Blockchain</li>
-            <li>How does it work?</li>
-            <li>Why try and build it in elixir</li>
+            <li>What is an Exchange</li>
+            <li>How to try and build it in elixir</li>
           </ul>
         </div>
 
@@ -147,7 +154,7 @@
       <section class="center">Big idea behind cryptocurrencies...</section>
 
       <section class="center">
-        Do value transfer over the internet
+        Do digital value transfer over the internet
         <aside class="notes">
           <ul>
             <li>first time we have a stoer of value that is comletely digital</li>
@@ -237,8 +244,6 @@
           </ul>
           </aside>
       </section>
-
-
 
 
       <section class="center">
@@ -471,21 +476,6 @@
 
       </section>
 
-
-      <section class="center">
-        <img src="lib/images/elixir_logo.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://brunakochi.com/projects/elixir.html</div>
-        <aside class="notes">
-          <ul>
-            <li>So why think about this in the context of Elixir?</li>
-            <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was
-              like, I want to review teh properties of elixir that make it such good fit</li>
-          </ul>
-
-        </aside>
-      </section>
-
-
       <section class="center">
         <div>Bitcoin uses blockchain to implement decentralized leger for payments</div>
       </section>
@@ -495,15 +485,55 @@
       </section>
 
 
-      <section class="center">
+      <!-- <section class="center">
         <div>So we need a decentralized system that is concurrent, that communicates via message passing</div>
       </section>
 
       <section class="center">
         <div>Sound familiar?</div>
+      </section> -->
+
+      <section class="center">
+        <div>So now that we know about what a crypto currency is....</div>
       </section>
 
-      <section class="center" b>
+      <section class="center">
+        <div>And how it works</div>
+      </section>
+
+
+      <section class="center">
+        <div>Let's talk about exchanges....</div>
+      </section>
+
+      <section class="center">
+        <div>What is an exchange?</div>
+      </section>
+
+      <section class="center">
+        <img src="lib/images/crypto_currency_exchange.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://bitcoinexchangeguide.com/vitalik-buterin-crypto-exchanges-burn-in-hell/</div>
+      </section>
+
+      
+
+
+
+
+
+      <!-- <section class="center">
+        <img src="lib/images/elixir_logo.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: http://brunakochi.com/projects/elixir.html</div>
+        <aside class="notes">
+          <ul>
+            <li>So why think about this in the context of Elixir?</li>
+            <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was
+              like, I want to review teh properties of elixir that make it such good fit</li>
+          </ul>
+        </aside>
+      </section> -->
+
+      <!-- <section class="center" b>
         Let's take a quick look at how
         <br /> message passing works in elixir
       </section>
@@ -686,36 +716,7 @@
             <li>agents are actually what we are going to use to store the state of our blockchain</li>
           </ul>
         </aside>
-      </section>
-
-
-      <section class="center">
-        Back to BlockChain
-
-        <aside class="notes">
-          <ul>
-            <li>so we saw some abstractions for concurrency around message passing and storing state</li>
-            <li>w can run mutiple processes at teh same time, we can store state in processes and communicate asynchronously
-              via messages</li>
-            <li>no we'll take a look at how elixir and especially Erlan allows us to create </li>
-            <li>yet to build a blockshain network, we want greater conrtol of the concurrency and message passing</li>
-            <li> We want something to manage that more complicated behavrio</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section class="center">
-        <h3>OTP</h3>
-        <aside class="notes">
-          <ul>
-            <li>When we think about how to build concurrent applications, and how to deal with monitorin, and timeouts etc, adn
-              servers, there are things to think about.</li>
-            <li>OTP framework takes care of this by grouping these essential practices into a set of libraries that have been
-              carefully engineered and battle-hardened over years.</li>
-            <li>The OTP framework is also a set of modules and standards designed to help you build applications. </li>
-            <ul>
-        </aside>
-      </section>
+      </section> -->
 
       <section class="center">
         <h3>So let's start building</h3>
@@ -1105,7 +1106,7 @@
         </aside>
       </section>
 
-      <section class="center">
+      <!-- <section class="center">
         <div>Let's add a Supervisor</div>
 
 
@@ -1116,11 +1117,9 @@
               when they fail.</li>
           </ul>
         </aside>
-      </section>
+      </section> -->
 
-      <section class="center">
-        How do we set this up?
-      </section>
+
 
 
       <section class="center" data-background-color="#fffff" style="top: 0px; padding: 0px 0px">
@@ -1270,7 +1269,7 @@
       </section>
 
 
-      <section class="center">
+      <!-- <section class="center">
         <h3>Introducing GenServer</h3>
         <aside class="notes">
           <ul>
@@ -1285,7 +1284,7 @@
                 <li>Genserers also allow us to maintian state</li>
           </ul>
         </aside>
-      </section>
+      </section> -->
 
 
       <section class="center" data-background-color="#fffff" style="top: 0px; padding: 0px 0px">
@@ -1587,9 +1586,9 @@
       </section>
 
 
-      <section class="center">
+      <!-- <section class="center">
         <h3>Let's try it!</h3>
-      </section>
+      </section> -->
 
 
       <section class="center" data-background-color="#025A6E">
