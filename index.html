@@ -513,6 +513,12 @@
       <section class="center">
         <img src="lib/images/crypto_currency_exchange.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
         <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: https://bitcoinexchangeguide.com/vitalik-buterin-crypto-exchanges-burn-in-hell/</div>
+        <aside class="notes">
+          <ul>
+            <li>business that allows customers to trade cryptocurrencies or digital currencies for other assets</li>
+            <li>such as conventional fiat money or other digital currencies.</li>
+          </ul>
+        </aside>
       </section>
 
       <section class="center">
@@ -679,7 +685,7 @@
       </section>
 
       <section class="center" data-background-color="#fffff">
-        <pre class="elixir" style="font-size: .7em">
+        <pre class="elixir" style="font-size: .4em">
           <code style="overflow: hidden; overflow-x: none;" data-trim>
                       defmodule Exchange.Account do
                         @me __MODULE__
@@ -687,6 +693,9 @@
 
                         defstruct id: nil, balance: 0
 
+                        def start_link(id, balance) do
+                          {:ok, pid} = Agent.start_link(fn -> %Account{id: id, balance: balance} end)
+                        end
                       end
 
                     </code>
@@ -1029,7 +1038,7 @@
                               account_pid = accounts[account_id].pid
                               current_balance = Account.get_account(account_pid).balance
 
-                              response = GenServer.call(AskServer, {:send_ask, %{account_id: random_account_id, balance: current_balance }})
+                              response = GenServer.call(AskServer, {:send_ask, %{account_id: account_id, balance: current_balance }})
                           end
                         </code>
                       </pre>
