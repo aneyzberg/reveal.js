@@ -547,6 +547,35 @@
         </div>
       </section>
 
+      <section class="center">
+          <div>
+            What is an OrderBook?
+          </div>
+        </section>
+
+
+    <section class="center">
+        <img src="lib/images/orderbook.png" style="width: 400px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: http://allcoinsnews.com/2018/01/06/binance-app-crypto-trading-made-easy/</div>
+        <aside class="notes">
+          <ul>
+          </ul>
+
+        </aside>
+    </section>
+
+    <section class="center">
+        <div>
+          <ul>
+            <li>Account</li>
+            <li>Manage Accounts</li>
+            <li>Place orders(asks and bids)</li>
+            <li>Match orders</li>
+            <li>Settle accounts</Li>
+          </ul>
+        </div>
+      </section>
+
 
 
 
@@ -558,6 +587,11 @@
             <li>So why think about this in the context of Elixir?</li>
             <li>so given this I tried to build a crypotcurrency in eliixr. Before I talk to you about what that experience was
               like, I want to review teh properties of elixir that make it such good fit</li>
+              <li>processes are isolated from each other, run concurrent to one another, and communicate via message passing. </li>
+            <li>small programs communciate to each other via message passing, supe rlight weight</li>
+            <li>they seem like native threads but are simpler, and can have thousands of processes running concurrently</li>
+            <li>thanks to the erlang VM, our processes are working across all your CPU's so you are maximizng efficiency.</li>
+            <li>processes communicate via message passing</li>
           </ul>
         </aside>
       </section>
@@ -591,10 +625,7 @@
             <li>processes communicate by passing messages</li>
             <li>here are two main components to this: send/2 and receive</li>
             <li>send function allows us to send to PIDs and receive function allows us to match messsges</li>
-            <li>processes are isolated from each other, run concurrent to one another, and communicate via message passing. </li>
-            <li>small programs communciate to each other via message passing, supe rlight weight</li>
-            <li>they seem like native threads but are simpler, and can have thousands of processes running concurrently</li>
-            <li>thanks to the erlang VM, our processes are working across all your CPU's so you are maximizng efficiency.</li>
+
           </ul>
         </aside>
       </section>
@@ -1069,10 +1100,10 @@
                   end
 
 
-                  def handle_call({:send_ask, account_info = %{account_id: account_id, balance: balance}}, from,  state = %{ ask_orders: orders, ask_id: value })  do
-                    ask = generate_ask(account_id)
+                  def handle_call({:send_ask, account_info}, from,  state = %{ ask_orders: orders, ask_id: value })  do
+                    ask = generate_ask(account_info.id)
                     ask_value = ask.price * ask.size
-                    case (ask_value <= balance) do
+                    case (ask_value <= account_info.balance) do
                       true ->
                         updated_state = %{state | ask_orders: [ ask | state.ask_orders]}
                         {:reply, {:ok, ask }, updated_state}
@@ -1160,22 +1191,7 @@
           </aside>
         </section>
 
-          <section class="center">
-            <div>
-              What is an OrderBook?
-            </div>
-          </section>
 
-
-      <section class="center">
-          <img src="lib/images/orderbook.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-          <div class="credit" style="padding-right: 187px; padding-bottom: 15px;">credit: http://allcoinsnews.com/2018/01/06/binance-app-crypto-trading-made-easy/</div>
-          <aside class="notes">
-            <ul>
-            </ul>
-
-          </aside>
-      </section>
 
 
       <section class="center" data-background-color="#fffff">
