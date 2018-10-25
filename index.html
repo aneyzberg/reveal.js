@@ -551,14 +551,24 @@
             <li> is any cryptographic system that uses pairs of keys: public keys which may be disseminated widely, and private
               keys which are known only to the owner. </li>
               <li>in this case alice can sign a message with her private key and send it to bob along with the public key. Bob can validate the message signature with the public key - knowing the message will not be tampered with</li>
+              <li>is used to generate a signature for each blockchain transaction a user sends out. This signature is used to confirm that the transaction has come from the user, and also prevents the transaction from being altered by anyone once it has been issued.
+                In short, you sign the cryptocurrencies you send to others using a Private Key.</li>
           </ul>
         </aside>
       </section>
 
 
       <section class="center">
-        <img src="lib/images/transaction.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://blockgeeks.com/bitcoin-transactions/</div>
+        <img src="lib/images/transaction.png" style="margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 26px; padding-bottom: 15px;">credit: https://blockgeeks.com/bitcoin-transactions/</div>
+        <aside class="notes">
+          <ul>
+            <li>
+                So, let's talk about how transactions work in this. Transactions in Bitcoin resemble a cashier's check in some ways. When you want to spend an "output" of a transaction you must spend the entire thing. It's similar to how you can't walk into the bank and say "I want to cash half of this check". However, in this model there is no equivalent of cash or bank accounts. So in order to send money anywhere you must "cash" a check written out to you, and "output" from that cashing process a check to your intended destination, and another check back to yourself.
+                This "cashing process" is actually a transaction in Bitcoin. In a transaction you spend 1 or more "checks" (actually known as UTXOs) and create 1 or more UTXOs to new destinations from those spent funds. The UTXOs you spend in a transaction are called "vins", and the new UTXOs you create are called "vouts". Once a UTXO is spent by a transaction it can be considered gone and destroyed. You can see it's history in the blockchain, but there is nothing that can done with it.
+            </li>
+          </ul>
+        </aside>
       </section>
 
 
@@ -569,8 +579,8 @@
       </section>
 
       <section>
-        <img src="lib/images/block_chain_explanation.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
+        <img src="lib/images/block_chain_explanation.png" style="width: 700px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 131px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
 
         <aside class="notes">
           <ul>
@@ -593,8 +603,8 @@
       <section class="center">
 
 
-        <img src="lib/images/proof-of-work.jpg" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://www.blockchain-council.org/blockchain/what-is-proof-of-work/</div>
+        <img src="lib/images/proof-of-work.jpg" style="margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 33px; padding-bottom: 15px;">credit: https://www.blockchain-council.org/blockchain/what-is-proof-of-work/</div>
         <aside class="notes">
           <ul>
             <li>
@@ -604,12 +614,25 @@
       </section>
 
       <section class="notes">
-        <img src="lib/images/block_chain_explanation.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
+        <img src="lib/images/block_chain_explanation.png" style="width: 700px; margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 131px; padding-bottom: 15px;">credit: https://computersecuritypgp.blogspot.com/2016/05/what-is-blockchain.html</div>
         <aside class="notes">
           <ul><li>the hash creted by a block when it solves the proof of work puzzle is what the next block will use to point to it</li></ul>
         </aside>
       </section>
+
+      <section class="center" data-background-color="#3b5490">
+
+
+          <img src="lib/images/proof-of-work-1.gif" style="width: 800px; margin-top: 17px; margin-bottom: 0px; box-shadow: none" />
+          <div class="credit" style="padding-right: 33px; padding-bottom: 15px;">credit: https://www.blockchain-council.org/blockchain/what-is-proof-of-work/</div>
+          <aside class="notes">
+            <ul>
+              <li>
+                hard to reach consensus when cheap to add blocks
+            </ul>
+          </aside>
+        </section>
 
       <section class="center">
 
@@ -653,8 +676,8 @@
 
       <section class="center">
         <h3>Nakomoto Concensus</h3>
-        <img src="lib/images/nakomoto_consensus.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px;" />
-        <div class="credit" style="padding-right: 226px; padding-bottom: 15px;">credit: https://blockgeeks.com/guides/blockchain-consensus/</div>
+        <img src="lib/images/nakomoto_consensus.png" style=" margin-top: 17px; margin-bottom: 0px;" />
+        <div class="credit" style="padding-right: 27px; padding-bottom: 15px;">credit: https://blockgeeks.com/guides/blockchain-consensus/</div>
         <aside class="notes">
           <ul>
             <li>
