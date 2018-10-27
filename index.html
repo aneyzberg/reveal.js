@@ -59,6 +59,9 @@
             <li>What is Bitcoin/Blockchain</li>
             <li>How does it work?</li>
             <li>Why try and build it in elixir</li>
+            <li>Bitcoin not just a currency - not just technology, but fusion of technology, economics, politics
+                how we got to where we are today -? How we got to this point in time  today - where bitcoin is actually able to exist
+              </li>
           </ul>
         </div>
 
@@ -1567,18 +1570,16 @@
       </section>
 
       <section class="center">
-          <div>Leveraging OTP</div>
+          <div>LEVERAGING OTP</div>
       </section>
 
 
-      <section class="center" style="top: 0" data-background-color="#222">
-          <img src="lib/images/otp.jpg" style="margin-top: 17px; margin-bottom: 0px; box-shadow: none;" />
+      <section class="center" style="top: 0" data-background-color="#fff">
+          <img src="lib/images/otp.png" style="width: 500px; margin-top: 17px; margin-bottom: 0px; box-shadow: none;" />
           <div class="credit" style="padding-right: 82px; padding-bottom: 15px;">credit:https://learnyousomeerlang.com/what-is-otp</div>
           <aside class="notes">
               <ul>
-                <li>Supervisors are specialized processes with one purpose: monitoring other processes. </li>
-                <li>These supervisors enable us to create fault-tolerant applications by automatically restarting child processes
-                  when they fail.</li>
+                <li>OTP is a collection of useful middleware, libraries, and tools written in the Erlang programming language </li>
               </ul>
             </aside>
       </section>
@@ -1604,6 +1605,54 @@
           </ul>
         </aside>
       </section>
+
+
+
+
+      <section class="center" style="top: 0" data-background-color="#fff">
+          <img src="lib/images/client-server.png" style="width: 600px; margin-top: 17px; margin-bottom: 0px; box-shadow: none;" />
+          <div class="credit" style="padding-right: 82px; padding-bottom: 15px;">credit:http://20bits.com/article/erlang-a-generic-server-tutorial</div>
+          <aside class="notes">
+              <ul>
+                <li>OTP is a collection of useful middleware, libraries, and tools written in the Erlang programming language </li>
+              </ul>
+            </aside>
+      </section>
+
+      <section class="center" data-background-color="#fffff" style="top: 0px; padding: 0px 0px">
+          <pre class="elixir" style="font-size: .55em; margin: 0 0; width: 100%; padding: 0">
+                      <code data-noescape data-trim style="max-height: none">
+                            code_change/3
+
+                            format_status/2
+
+                            <mark>handle_call/3</mark>
+
+                            <mark>handle_cast/2</mark>
+
+                            handle_continue/2
+
+                            <mark>handle_info/2</mark>
+
+                            <mark>init/1</mark>
+
+                            <mark>terminate/2</mark>
+
+                              </code>
+                            </pre>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Agent makes it really easy to maintain and update state of blockchian
+              </li>
+              <li>given the blockchain is an irreversible ledger, we will only want to add blocks to the chain</li>
+              <li>Having an agent store the state makes this really easy</li>
+            </ul>
+          </aside>
+
+        </section>
+
 
 
       <section class="center" data-background-color="#fffff" style="top: 0px; padding: 0px 0px">
@@ -1963,6 +2012,23 @@
           </ul>
         </aside>
       </section>
+
+      <section class="center">
+          <h3>In Conclusion....</h3>
+
+          <aside class="notes">
+              Hopefully some of you learned something about crypto and maybe some of you learned a few things about elixir
+              A lot of the work I do including this talk is with the goal of helping underrepresented folks  come into the community.
+
+              There was a lot of conversation this conference around doing more with less, creating deep modules, simpler interfaces that are powerful.
+              And I wonder if we can take those abstraction and apply them not just to our systems but to our communities.
+              Specifically this community. As the community grows - how can we have powerful interfaces or we might call them interactions with other humans
+              I want everyone to think about who are the last 5 people they shared their excitement about elixir with?
+              Are those folks reflective of the diverse inclusive community we woudlike to build?
+
+              If not, who are the next 5 people that you might  reach out to to share your excitement with? It may seem like a small gesture - but it can be an incredibly powerful one. Often all folks need is to be invited in.
+          </aside>
+        </section>
 
 
       <!-- <section class="center">
